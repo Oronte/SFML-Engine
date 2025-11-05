@@ -1,0 +1,30 @@
+#pragma once
+#include "CoreMinimal.h"
+
+namespace engine
+{
+
+	template <typename Type>
+	class Singleton
+	{
+	public:
+		FORCEINLINE static Type& GetInstance()
+		{
+			static Type _instance;
+			return _instance;
+		}
+	};
+
+}
+
+
+///////////////////////////////////////////////
+// 
+//	class MyClass : public engine::Singleton<MyClass>
+//  {
+//		
+//	}
+//	
+//	MyClass _myClassInstance = MyClass::GetInstance();
+//
+///////////////////////////////////////////////
