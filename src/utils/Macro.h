@@ -16,6 +16,8 @@
 #include <any>
 #include <thread>
 #include <mutex>
+#include <format>
+#include <limits>
 
 // OLD
 #include <math.h>
@@ -51,9 +53,9 @@
 #define CAST(_type, _expr) static_cast<_type>(_expr)
 #define SLEEP(_duration) sleep(_duration)
 #define NO_DISCARD _NODISCARD
-#define SAME_VALUE(_first, _second) is_same_v<_first, _second>
-#define ENABLE_IF(_element) enable_if_t<_element>
-#define IS_BASE_OF(_base, _type) typename = enable_if_t<is_base_of_v<_base, _type>>
+#define SAME_VALUE(_first, _second) std::is_same_v<_first, _second>
+#define ENABLE_IF(_element) std::enable_if_t<_element>
+#define IS_BASE_OF(_base, _type) typename = std::enable_if_t<std::is_base_of_v<_base, _type>>
 #define TYPE(_type) decay_t<decltype(_type)>
 #define TYPE_ID(_type) typeid(_type)
 #define TYPE_NAME(_type) CAST(std::string, TYPE_ID(_type).name())
