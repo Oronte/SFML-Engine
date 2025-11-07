@@ -6,7 +6,6 @@ namespace engine::Math
 
     using Real = float; // Change to double if you prefer higher precision
 
-    // ---------- Constants ----------
     inline constexpr Real pi = CAST(Real, 3.14159265358979323846);
     inline constexpr Real tau = CAST(Real, 2.0 * 3.14159265358979323846);
     inline constexpr Real halfPi = CAST(Real, 1.57079632679489661923);
@@ -14,15 +13,95 @@ namespace engine::Math
     inline constexpr Real radToDeg = CAST(Real, 180.0 / pi);
     inline constexpr Real epsilon = CAST(Real, 1e-6);
     inline constexpr Real infinity = std::numeric_limits<Real>::infinity();
-    inline constexpr Real SQRT2_ = CAST(Real, 1.4142135623730951);
-    inline constexpr Real INV_SQRT2_ = CAST(Real, 0.7071067811865476);
     inline constexpr Real golden = CAST(Real, 1.6180339887498948);
 
 
+    #pragma region Common Functions
 
+    inline constexpr Real Sqrt(Real _x) noexcept
+    {
+        return std::sqrt(_x);
+    }
+    inline constexpr Real InvSqrt(Real _x) noexcept
+    {
+        return 1 / Sqrt(_x);
+    }
+    inline constexpr Real Pow(Real _base, int _exp) noexcept
+    {
+        return std::pow(_base, _exp);
+    }
+    inline constexpr Real Exp(Real _x) noexcept
+    {
+        return std::exp(_x);
+    }
+    inline constexpr Real Log(Real _x) noexcept
+    {
+        return std::log(_x);
+    }
+    inline Real Log10(const Real& _x) noexcept 
+    { 
+        return std::log10(_x);
+    }
 
-    // ---------- Scalar utilities ----------
-#pragma region Scalar utilities
+    inline constexpr Real Sin(Real _x) noexcept
+    {
+        return std::sin(_x);
+    }
+    inline constexpr Real Cos(Real _x) noexcept
+    {
+        return std::cos(_x);
+    }
+    inline constexpr Real Tan(Real _x) noexcept
+    {
+        return std::tan(_x);
+    }
+    
+    inline Real Asin(const Real& _x) noexcept 
+    { 
+        return std::asin(_x); 
+    }
+    inline Real Acos(const Real& _x) noexcept 
+    { 
+        return std::acos(_x); 
+    }
+    inline Real Atan(const Real& _x) noexcept 
+    { 
+        return std::atan(_x); 
+    }
+    inline Real Atan2(const Real& _y, const Real& _x) noexcept 
+    { 
+        return std::atan2(_y, _x); 
+    }
+
+    inline Real Sinh(const Real& _x) noexcept 
+    { 
+        return std::sinh(_x); 
+    }
+    inline Real Cosh(const Real& _x) noexcept 
+    { 
+        return std::cosh(_x); 
+    }
+    inline Real Tanh(const Real& _x) noexcept 
+    { 
+        return std::tanh(_x); 
+    }
+
+    inline Real Floor(const Real& _x) noexcept 
+    { 
+        return std::floor(_x); 
+    }
+    inline Real Ceil(const Real& _x) noexcept 
+    { 
+        return std::ceil(_x); 
+    }
+    inline Real Round(const Real& _x) noexcept 
+    { 
+        return std::round(_x); 
+    }
+    inline Real Trunc(const Real& _x) noexcept 
+    { 
+        return std::trunc(_x); 
+    }
 
     /// <summary>Converts degrees to radians.</summary>
     inline constexpr Real DegToRad(const Real& _degrees) noexcept
@@ -76,12 +155,10 @@ namespace engine::Math
         return Abs(_a - _b) <= _eps;
     }
 
-#pragma endregion
+    #pragma endregion
 
 
-    // ---------- Interpolation ----------
-
-#pragma region Interpolation
+    #pragma region Interpolation
 
     /// <summary>Linearly interpolates between two values.</summary>
     inline constexpr Real Lerp(const Real& _a, const Real& _b, const Real& _time) noexcept
@@ -120,7 +197,6 @@ namespace engine::Math
         return _x * _x * _x * (_x * (_x * 6 - 15) + 10);
     }
 
-#pragma endregion
-
+    #pragma endregion
 
 }
