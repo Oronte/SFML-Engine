@@ -18,89 +18,89 @@ namespace engine::Math
 
     #pragma region Common Functions
 
-    inline constexpr Real Sqrt(Real _x) noexcept
+    inline Real Sqrt(Real _x) noexcept
     {
-        return std::sqrt(_x);
+        return CAST(Real, std::sqrt(_x));
     }
-    inline constexpr Real InvSqrt(Real _x) noexcept
+    inline Real InvSqrt(Real _x) noexcept
     {
-        return 1 / Sqrt(_x);
+        return CAST(Real, 1) / Sqrt(_x);
     }
-    inline constexpr Real Pow(Real _base, int _exp) noexcept
+    inline Real Pow(Real _base, int _exp) noexcept
     {
-        return std::pow(_base, _exp);
+        return CAST(Real, std::pow(_base, _exp));
     }
-    inline constexpr Real Exp(Real _x) noexcept
+    inline Real Exp(Real _x) noexcept
     {
-        return std::exp(_x);
+        return CAST(Real, std::exp(_x));
     }
-    inline constexpr Real Log(Real _x) noexcept
+    inline Real Log(Real _x) noexcept
     {
-        return std::log(_x);
+        return CAST(Real, std::log(_x));
     }
-    inline Real Log10(const Real& _x) noexcept 
-    { 
-        return std::log10(_x);
+    inline Real Log10(const Real& _x) noexcept
+    {
+        return CAST(Real, std::log10(_x));
     }
 
-    inline constexpr Real Sin(Real _x) noexcept
+    inline Real Sin(Real _x) noexcept
     {
-        return std::sin(_x);
+        return CAST(Real, std::sin(_x));
     }
-    inline constexpr Real Cos(Real _x) noexcept
+    inline Real Cos(Real _x) noexcept
     {
-        return std::cos(_x);
+        return CAST(Real, std::cos(_x));
     }
-    inline constexpr Real Tan(Real _x) noexcept
+    inline Real Tan(Real _x) noexcept
     {
-        return std::tan(_x);
-    }
-    
-    inline Real Asin(const Real& _x) noexcept 
-    { 
-        return std::asin(_x); 
-    }
-    inline Real Acos(const Real& _x) noexcept 
-    { 
-        return std::acos(_x); 
-    }
-    inline Real Atan(const Real& _x) noexcept 
-    { 
-        return std::atan(_x); 
-    }
-    inline Real Atan2(const Real& _y, const Real& _x) noexcept 
-    { 
-        return std::atan2(_y, _x); 
+        return CAST(Real, std::tan(_x));
     }
 
-    inline Real Sinh(const Real& _x) noexcept 
-    { 
-        return std::sinh(_x); 
+    inline Real Asin(const Real& _x) noexcept
+    {
+        return CAST(Real, std::asin(_x));
     }
-    inline Real Cosh(const Real& _x) noexcept 
-    { 
-        return std::cosh(_x); 
+    inline Real Acos(const Real& _x) noexcept
+    {
+        return CAST(Real, std::acos(_x));
     }
-    inline Real Tanh(const Real& _x) noexcept 
-    { 
-        return std::tanh(_x); 
+    inline Real Atan(const Real& _x) noexcept
+    {
+        return CAST(Real, std::atan(_x));
+    }
+    inline Real Atan2(const Real& _y, const Real& _x) noexcept
+    {
+        return CAST(Real, std::atan2(_y, _x));
     }
 
-    inline Real Floor(const Real& _x) noexcept 
-    { 
-        return std::floor(_x); 
+    inline Real Sinh(const Real& _x) noexcept
+    {
+        return CAST(Real, std::sinh(_x));
     }
-    inline Real Ceil(const Real& _x) noexcept 
-    { 
-        return std::ceil(_x); 
+    inline Real Cosh(const Real& _x) noexcept
+    {
+        return CAST(Real, std::cosh(_x));
     }
-    inline Real Round(const Real& _x) noexcept 
-    { 
-        return std::round(_x); 
+    inline Real Tanh(const Real& _x) noexcept
+    {
+        return CAST(Real, std::tanh(_x));
     }
-    inline Real Trunc(const Real& _x) noexcept 
-    { 
-        return std::trunc(_x); 
+
+    inline Real Floor(const Real& _x) noexcept
+    {
+        return CAST(Real, std::floor(_x));
+    }
+    inline Real Ceil(const Real& _x) noexcept
+    {
+        return CAST(Real, std::ceil(_x));
+    }
+    inline Real Round(const Real& _x) noexcept
+    {
+        return CAST(Real, std::round(_x));
+    }
+    inline Real Trunc(const Real& _x) noexcept
+    {
+        return CAST(Real, std::trunc(_x));
     }
 
     /// <summary>Converts degrees to radians.</summary>
@@ -199,4 +199,249 @@ namespace engine::Math
 
     #pragma endregion
 
+
+    #pragma region Random
+
+    template <typename T>
+    NO_DISCARD T GetRandomNumberInRange(const T& _min, const T& _max)
+    {
+        std::random_device _rSeed; // Get a random seed
+        std::mt19937 _gen(_rSeed()); // Init generator with the seed
+        std::uniform_real_distribution<T> _distr(_min, _max); // Define limits
+
+        return _distr(_gen); // Generate number
+    }
+    NO_DISCARD Real GetRandomRealInRange(const Real& _min, const Real& _max)
+    {
+        return GetRandomNumberInRange<Real>(_min, _max);
+    }
+
+    #pragma endregion
+
+
+    #pragma region Easing curves
+
+
+    NO_DISCARD inline Real Linear(Real _x) noexcept
+    {
+        return _x;
+    }
+
+    NO_DISCARD inline Real EaseInSine(Real _x) noexcept
+    {
+        return CAST(Real, 1.0) - Cos((_x * pi) / CAST(Real, 2.0));
+    }
+    NO_DISCARD inline Real EaseOutSine(Real _x) noexcept
+    {
+        return Sin((_x * pi) / CAST(Real, 2.0));
+    }
+    NO_DISCARD inline Real EaseInOutSine(Real _x) noexcept
+    {
+        return -CAST(Real, 0.5) * (Cos(pi * _x) - CAST(Real, 1.0));
+    }
+
+    NO_DISCARD inline Real EaseInQuad(Real _x) noexcept
+    {
+        return _x * _x;
+    }
+    NO_DISCARD inline Real EaseOutQuad(Real _x) noexcept
+    {
+        constexpr Real _one = CAST(Real, 1.0);
+        return _one - (_one - _x) * (_one - _x);
+    }
+    NO_DISCARD inline Real EaseInOutQuad(Real _x) noexcept
+    {
+        constexpr Real _two = CAST(Real, 2.0);
+        return (_x < CAST(Real, 0.5)) ? 
+            _two * _x * _x :
+            CAST(Real, 1.0) - Pow(-_two * _x + _two, 2) / _two;
+    }
+
+    NO_DISCARD inline Real EaseInCubic(Real _x) noexcept
+    {
+        return _x * _x * _x;
+    }
+    NO_DISCARD inline Real EaseOutCubic(Real _x) noexcept
+    {
+        constexpr Real _one = CAST(Real, 1.0);
+        return _one - Pow(_one - _x, 3);
+    }
+    NO_DISCARD inline Real EaseInOutCubic(Real _x) noexcept
+    {
+        constexpr Real _two = CAST(Real, 2.0);
+        return (_x < CAST(Real, 0.5)) ? 
+            CAST(Real, 4.0) * _x * _x * _x : 
+            CAST(Real, 1.0) - Pow(-_two * _x + _two, 3) / _two;
+    }
+
+    NO_DISCARD inline Real EaseInQuart(Real _x) noexcept
+    {
+        return _x * _x * _x * _x;
+    }
+    NO_DISCARD inline Real EaseOutQuart(Real _x) noexcept
+    {
+        constexpr Real _one = CAST(Real, 1.0);
+        return _one - Pow(_one - _x, 4);
+    }
+    NO_DISCARD inline Real EaseInOutQuart(Real _x) noexcept
+    {
+        constexpr Real _two = CAST(Real, 2.0);
+        return (_x < CAST(Real, 0.5)) ? 
+            CAST(Real, 8.0) * _x * _x * _x * _x :
+            CAST(Real, 1.0) - Pow(-_two * _x + _two, 4) / _two;
+    }
+
+    NO_DISCARD inline Real EaseInQuint(Real _x) noexcept
+    {
+        return _x * _x * _x * _x * _x;
+    }
+    NO_DISCARD inline Real EaseOutQuint(Real _x) noexcept
+    {
+        constexpr Real _one = CAST(Real, 1.0);
+        return _one - Pow(_one - _x, 5);
+    }
+    NO_DISCARD inline Real EaseInOutQuint(Real _x) noexcept
+    {
+        constexpr Real _two = CAST(Real, 2.0);
+        return (_x < CAST(Real, 0.5)) ? 
+            CAST(Real, 16.0) * _x * _x * _x * _x * _x : 
+            CAST(Real, 1.0) - Pow(-_two * _x + _two, 5) / _two;
+    }
+
+    NO_DISCARD inline Real EaseInExpo(Real _x) noexcept
+    {
+        constexpr Real _zero = CAST(Real, 0.0);
+        constexpr Real _ten = CAST(Real, 10.0);
+        return (_x == _zero) ? _zero : Pow(2.0, CAST(int, _ten * _x - _ten));
+    }
+    NO_DISCARD inline Real EaseOutExpo(Real _x) noexcept
+    {
+        constexpr Real _one = CAST(Real, 1.0);
+        return (_x == _one) ? _one : _one - Pow(2.0, CAST(int, -CAST(Real, 10.0) * _x));
+    }
+    NO_DISCARD inline Real EaseInOutExpo(Real _x) noexcept
+    {
+        constexpr Real _zero = CAST(Real, 0.0);
+        constexpr Real _one = CAST(Real, 1.0);
+        constexpr Real _two = CAST(Real, 2.0);
+        constexpr Real _ten = CAST(Real, 10.0);
+
+        if (_x == _zero) return _zero;
+        if (_x == _one) return _one;
+        return (_x < 0.5) ? Pow(2.0, CAST(int, _two * _ten * _x - _ten)) / _two
+            : (_two - Pow(2.0, CAST(int, -_two * _ten * _x + _ten))) / _two;
+    }
+
+    NO_DISCARD inline Real EaseInCirc(Real _x) noexcept
+    {
+        constexpr Real _one = CAST(Real, 1.0);
+        return _one - Sqrt(_one - _x * _x);
+    }
+    NO_DISCARD inline Real EaseOutCirc(Real _x) noexcept
+    {
+        constexpr Real _one = CAST(Real, 1.0);
+        return Sqrt(_one - Pow(_x - _one, 2));
+    }
+    NO_DISCARD inline Real EaseInOutCirc(Real _x) noexcept
+    {
+        constexpr Real _one = CAST(Real, 1.0);
+        constexpr Real _two = CAST(Real, 2.0);
+
+        return (_x < CAST(Real, 0.5)) ? (_one - Sqrt(_one - Pow(_two * _x, 2))) / _two
+            : (Sqrt(_one - Pow(-_two * _x + _two, 2)) + _one) / _two;
+    }
+
+    NO_DISCARD inline Real EaseInBack(Real _x) noexcept
+    {
+        constexpr Real _c1 = CAST(Real, 1.70158);
+        constexpr Real _c3 = _c1 + CAST(Real, 1.0);
+        return _c3 * _x * _x * _x - _c1 * _x * _x;
+    }
+    NO_DISCARD inline Real EaseOutBack(Real _x) noexcept
+    {
+        constexpr Real _one = CAST(Real, 1.0);
+
+        constexpr Real _c1 = CAST(Real, 1.70158);
+        constexpr Real _c3 = _c1 + _one;
+        return _one + _c3 * Pow(_x - _one, 3) + _c1 * Pow(_x - _one, 2);
+    }
+    NO_DISCARD inline Real EaseInOutBack(Real _x) noexcept
+    {
+        constexpr Real _one = CAST(Real, 1.0);
+        constexpr Real _two = CAST(Real, 2.0);
+
+        constexpr Real _c1 = CAST(Real, 1.70158);
+        constexpr Real _c2 = _c1 * CAST(Real, 1.525);
+
+        return (_x < CAST(Real, 0.5))
+            ? (Pow(_two * _x, 2) * ((_c2 + _one) * _two * _x - _c2)) / _two
+            : (Pow(_two * _x - _two, 2) * ((_c2 + _one) * (_two * _x - _two) + _c2) + _two) / _two;
+    }
+
+    NO_DISCARD inline Real EaseInElastic(Real _x) noexcept
+    {
+        constexpr Real _zero = CAST(Real, 0.0);
+        constexpr Real _one = CAST(Real, 1.0);
+        constexpr Real _ten = CAST(Real, 10.0);
+        constexpr Real _twoPiOverThree = (CAST(Real, 2.0) * pi) / CAST(Real, 3.0);
+
+        if (_x == _zero) return _zero;
+        if (_x == _one)  return _one;
+        return -Pow(CAST(Real, 2.0), CAST(int, _ten * _x - _ten)) * Sin((_x * _ten - CAST(Real, 10.75)) * _twoPiOverThree);
+    }
+    NO_DISCARD inline Real EaseOutElastic(Real _x) noexcept
+    {
+        constexpr Real _zero = CAST(Real, 0.0);
+        constexpr Real _one = CAST(Real, 1.0);
+        constexpr Real _ten = CAST(Real, 10.0);
+        constexpr Real _twoPiOverThree = (CAST(Real, 2.0) * pi) / CAST(Real, 3.0);
+
+        if (_x == _zero) return _zero;
+        if (_x == _one)  return _one;
+        return Pow(CAST(Real, 2.0), CAST(int, -_ten * _x)) * Sin((_x * _ten - CAST(Real, 0.75)) * _twoPiOverThree) + _one;
+    }
+    NO_DISCARD inline Real EaseInOutElastic(Real _x) noexcept
+    {
+        constexpr Real _zero = CAST(Real, 0.0);
+        constexpr Real _one = CAST(Real, 1.0);
+        constexpr Real _two = CAST(Real, 2.0);
+        constexpr Real _ten = CAST(Real, 10.0);
+        constexpr Real _twoPiOver4_5 = (CAST(Real, 2.0) * pi) / CAST(Real, 4.5);
+
+        if (_x == _zero) return _zero;
+        if (_x == _one)  return _one;
+        if (_x < CAST(Real, 0.5))
+            return -(Pow(_two, CAST(int, _two * _ten * _x - _ten)) * Sin((_two * _x - CAST(Real, 1.1125)) * _twoPiOver4_5)) / _two;
+        else
+            return (Pow(_two, CAST(int, -_two * _ten * _x + _ten)) * Sin((_two * _x - CAST(Real, 1.1125)) * _twoPiOver4_5)) / _two + _one;
+    }
+
+    NO_DISCARD inline Real EaseOutBounce(Real _x) noexcept
+    {
+        constexpr Real _n1 = CAST(Real, 7.5625);
+        constexpr Real _d1 = CAST(Real, 2.75);
+        constexpr Real _threeHalves = CAST(Real, 1.5);
+        constexpr Real _twoPoint625 = CAST(Real, 2.625);
+
+        if (_x < CAST(Real, 1.0) / _d1) return _n1 * _x * _x;
+        else if (_x < CAST(Real, 2.0) / _d1) return _n1 * (_x - _threeHalves / _d1) * (_x - _threeHalves / _d1) + CAST(Real, 0.75);
+        else if (_x < CAST(Real, 2.5) / _d1) return _n1 * (_x - _twoPoint625 / _d1) * (_x - _twoPoint625 / _d1) + CAST(Real, 0.9375);
+        else return _n1 * (_x - _twoPoint625 / _d1) * (_x - _twoPoint625 / _d1) + CAST(Real, 0.984375);
+    }
+    NO_DISCARD inline Real EaseInBounce(Real _x) noexcept
+    {
+        constexpr Real _one = CAST(Real, 1.0);
+        return _one - EaseOutBounce(_one - _x);
+    }
+    NO_DISCARD inline Real EaseInOutBounce(Real _x) noexcept
+    {
+        constexpr Real _one = CAST(Real, 1.0);
+        constexpr Real _two = CAST(Real, 2.0);
+        return (_x < CAST(Real, 0.5))
+            ? (_one - EaseOutBounce(_one - _two * _x)) / _two
+            : (_one + EaseOutBounce(_two * _x - _one)) / _two;
+    }
+
+
+    #pragma endregion
 }
