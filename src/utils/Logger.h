@@ -109,7 +109,6 @@ namespace engine
     public:
         static void Reset();
         static void PrintLog(const VerbosityType& _type, const std::string& _text, const std::string& _debug = "");
-        static void PrintLog(const VerbosityType& _type, const sf::Vector2f& _vector, const std::string& _debug);
     };
 
 }

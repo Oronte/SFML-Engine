@@ -57,9 +57,3 @@ void Logger::PrintLog(const VerbosityType& _type, const std::string& _text, cons
 
     if (_type == VerbosityType::Fatal) throw Exception("Fatal exception occurred");
 }
-
-void Logger::PrintLog(const VerbosityType& _type, const sf::Vector2f& _vector, const std::string& _debug)
-{
-    const std::string& _vectorString = "X: " + std::to_string(_vector.x) + " Y: " + std::to_string(_vector.y);
-    PrintLog(_type, _vectorString, _debug);
-}

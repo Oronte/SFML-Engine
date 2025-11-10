@@ -18,12 +18,16 @@ namespace engine::Math
 
     #pragma region Common Functions
 
-    inline Real Sqrt(Real _x) noexcept
+    inline Real Sqrt(Real _x)
     {
+        if (_x < CAST(Real, 0))
+            throw Exception(std::format("Sqrt: negative input => _x = {} (must be >= 0)", _x));
         return CAST(Real, std::sqrt(_x));
     }
-    inline Real InvSqrt(Real _x) noexcept
+    inline Real InvSqrt(Real _x)
     {
+        if (_x <= CAST(Real, 0))
+            throw Exception(std::format("InvSqrt: non-positive input => _x = {} (must be > 0)", _x));
         return CAST(Real, 1) / Sqrt(_x);
     }
     inline Real Pow(Real _base, int _exp) noexcept
@@ -34,12 +38,16 @@ namespace engine::Math
     {
         return CAST(Real, std::exp(_x));
     }
-    inline Real Log(Real _x) noexcept
+    inline Real Log(Real _x)
     {
+        if (_x <= CAST(Real, 0))
+            throw Exception(std::format("Log: non-positive input => _x = {} (must be > 0)", _x));
         return CAST(Real, std::log(_x));
     }
-    inline Real Log10(const Real& _x) noexcept
+    inline Real Log10(const Real& _x)
     {
+        if (_x <= CAST(Real, 0))
+            throw Exception(std::format("Log10: non-positive input => _x = {} (must be > 0)", _x));
         return CAST(Real, std::log10(_x));
     }
 
@@ -56,20 +64,26 @@ namespace engine::Math
         return CAST(Real, std::tan(_x));
     }
 
-    inline Real Asin(const Real& _x) noexcept
+    inline Real Asin(const Real& _x)
     {
+        if (_x < CAST(Real, -1) || _x > CAST(Real, 1))
+            throw Exception(std::format("Asin: input out of range => _x = {} (must be in [-1, 1])", _x));
         return CAST(Real, std::asin(_x));
     }
-    inline Real Acos(const Real& _x) noexcept
+    inline Real Acos(const Real& _x)
     {
+        if (_x < CAST(Real, -1) || _x > CAST(Real, 1))
+            throw Exception(std::format("Acos: input out of range => _x = {} (must be in [-1, 1])", _x));
         return CAST(Real, std::acos(_x));
     }
     inline Real Atan(const Real& _x) noexcept
     {
         return CAST(Real, std::atan(_x));
     }
-    inline Real Atan2(const Real& _y, const Real& _x) noexcept
+    inline Real Atan2(const Real& _y, const Real& _x)
     {
+        if (_x == CAST(Real, 0) && _y == CAST(Real, 0))
+            throw Exception(std::format("Atan2: undefined for _x = {} and _y = {} (both 0)", _x, _y));
         return CAST(Real, std::atan2(_y, _x));
     }
 
@@ -102,6 +116,7 @@ namespace engine::Math
     {
         return CAST(Real, std::trunc(_x));
     }
+
 
     /// <summary>Converts degrees to radians.</summary>
     inline constexpr Real DegToRad(const Real& _degrees) noexcept
@@ -210,10 +225,6 @@ namespace engine::Math
         std::uniform_real_distribution<T> _distr(_min, _max); // Define limits
 
         return _distr(_gen); // Generate number
-    }
-    NO_DISCARD Real GetRandomRealInRange(const Real& _min, const Real& _max)
-    {
-        return GetRandomNumberInRange<Real>(_min, _max);
     }
 
     #pragma endregion

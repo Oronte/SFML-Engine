@@ -1,7 +1,7 @@
 #include "CoreMinimal.h"
-#include "time/TimerManager.h"
-#include "Vector2D.h"
-#include "utils/Utilities.h"
+#include "Level.h"
+//#include "time/TimerManager.h"
+
 
 int main()
 {
@@ -9,7 +9,16 @@ int main()
 	{
 		engine::FVector2 _vector = engine::FVector2(sf::Vector2f(1, 2));
 		engine::FVector2 _other = engine::FVector2(5);
-		std::cout << _vector;
+		std::cout << _vector << std::endl;
+
+		engine::Level _level = engine::Level("First Level", engine::UVector2(1000), true);
+
+		while (_level.IsActive())
+		{
+			_level.Update();
+		}
+
+		int _test = engine::Math::InvSqrt(-1345.f);
 
 		//std::cout << _vector.LengthSquared();
 		//std::cout << _vector.Length();
@@ -41,7 +50,7 @@ int main()
 	}
 	catch (const engine::Exception& _exception)
 	{
-		std::cerr << _exception.What() << std::endl;
+		std::cerr << DARK_RED << _exception.What() << COLOR_RESET << std::endl;
 	}
 	return 0;
 }
