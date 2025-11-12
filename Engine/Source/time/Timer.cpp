@@ -6,8 +6,6 @@ using namespace engine;
 Timer::Timer(const std::function<void()>& _callback, const float& _duration, const bool _startRunning,
 	const bool _isLoop)
 {
-	TimerManager& _manager = TimerManager::GetInstance();
-
 	isToDelete = false;
 	isRunning = _startRunning;
 	isLoop = _isLoop;
@@ -15,7 +13,7 @@ Timer::Timer(const std::function<void()>& _callback, const float& _duration, con
 	duration = _duration;
 	callback = _callback;
 
-	_manager.AddTimer(this);
+	TimerManager::GetInstance().AddTimer(this);
 }
 
 void Timer::Start()
@@ -32,15 +30,9 @@ void Timer::Update(const float& _deltaTime)
 
 	if (currentTime >= duration)
 	{
-		if (callback)
-		{
-			callback();
-		}
+		if (callback) callback();
 
-		if (!isLoop)
-		{
-			Stop();
-		}
+		if (!isLoop) Stop();
 
 		Reset();
 	}

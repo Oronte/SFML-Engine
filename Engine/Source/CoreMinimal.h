@@ -3,4 +3,4 @@
 #include "utils/Logger.h"
 #include "Vector2D.h"
 
-#define M_TIMER TimerManager::GetInstance()
+#define M_TIMER engine::TimerManager::GetInstance()

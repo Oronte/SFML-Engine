@@ -35,13 +35,11 @@ project "Game"
 
    filter "configurations:Debug"
        defines { "DEBUG" }
-       links { "sfml-graphics-d", "sfml-window-d", "sfml-system-d", "sfml-audio-d", "sfml-network-d" }
        runtime "Debug"
        symbols "On"
 
    filter "configurations:Release"
        defines { "RELEASE" }
-       links { "sfml-graphics", "sfml-window", "sfml-system", "sfml-audio", "sfml-network" }
        runtime "Release"
        optimize "On"
        symbols "On"

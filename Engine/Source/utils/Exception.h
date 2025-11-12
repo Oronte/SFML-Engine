@@ -1,18 +1,21 @@
 #pragma once
 #include "Macro.h"
 
+#define TROW_EXCEPTION(_msg) throw Exception(_msg, DEBUG_INFO);
+
 namespace engine
 {
 
     class Exception : public std::exception
     {
-        using Error = const std::string;
+        using Error = std::string;
         Error message;
 
     public:
-        Exception(const Error& _error) :
-            message(CAST(Error, _error) + " " + DEBUG_INFO)
+        Exception(const Error& _error, const Error& _debugInfo = "") :
+            message(_error + " " + _debugInfo)
         {
+            if (_debugInfo == "") message += DEBUG_INFO;
         }
 
     private:
@@ -34,7 +37,7 @@ namespace engine
 // 
 //  try
 //  {
-//      throw engine::Exception("msg");
+//      TROW_EXCEPTION("msg");
 //  }
 //  catch (const engine::Exception& _exception)
 //  {

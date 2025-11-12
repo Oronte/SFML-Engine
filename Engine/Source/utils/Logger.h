@@ -2,14 +2,14 @@
 #include "Exception.h"
 #include "Color.h"
 
-//#define DEBUG
+#define DEBUG
 #ifdef DEBUG
 #define USE_DEBUG 1
 #else
 #define USE_DEBUG 0
 #endif // DEBUG
 
-#define LOG(_verbosity, _msg)   engine::Logger::PrintLog(_verbosity, _msg, DEBUG_INFO)
+#define LOG(_verbosity, _msg)   engine::Logger::PrintLog(_verbosity, CAST(std::string, _msg), DEBUG_INFO)
 #define WRITE_IN_LOG(_verbosity)        _verbosity >= engine::VerbosityType::Log
 #define WRITE_IN_CONSOLE(_verbosity)    _verbosity > engine::VerbosityType::Log
 
@@ -57,7 +57,7 @@ namespace engine
         {
             if (_type >= VerbosityType::COUNT)
             {
-                throw Exception("Invalid VerbosityType !");
+                TROW_EXCEPTION(std::format("Invalid VerbosityType ! _type = {} and must be < {}", CAST(int, _type), CAST(int, VerbosityType::COUNT)));
             }
 
             const std::vector<Gradient>& _verbosityColors =
@@ -77,7 +77,7 @@ namespace engine
         {
             if (_type >= VerbosityType::COUNT)
             {
-                throw Exception("Invalid VerbosityType !");
+                TROW_EXCEPTION(std::format("Invalid VerbosityType ! _type = {} and must be < {}", CAST(int, _type), CAST(int, VerbosityType::COUNT)));
             }
 
             const std::vector<std::string>& _verbosityTexts =

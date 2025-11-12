@@ -55,5 +55,5 @@ void Logger::PrintLog(const VerbosityType& _type, const std::string& _text, cons
         }
     }
 
-    if (_type == VerbosityType::Fatal) throw Exception("Fatal exception occurred");
+    if (_type == VerbosityType::Fatal) TROW_EXCEPTION("Fatal exception occurred");
 }

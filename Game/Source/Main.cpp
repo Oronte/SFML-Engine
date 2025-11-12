@@ -1,22 +1,15 @@
-#include "Level.h"
+#include "Engine.h"
 
 int main()
 {
 	try
 	{
-		std::cout << engine::Math::Sqrt(2);
-		
-		//LOG(engine::VerbosityType::Display, "test");
-
-		engine::Level _level = engine::Level("first level");
-		while (_level.IsActive())
-		{
-			_level.Update();
-		}
+		engine::Engine _engine = engine::Engine(new engine::Level("first level"));
+		_engine.Start();
 	}
-	catch (const engine::Exception& _e)
+	catch (const engine::Exception& _exception)
 	{
-		std::cerr << DARK_RED << _e.What() << COLOR_RESET << std::endl;
+		std::cerr << DARK_RED << _exception.What() << COLOR_RESET << std::endl;
 	}
 
 	return EXIT_SUCCESS;

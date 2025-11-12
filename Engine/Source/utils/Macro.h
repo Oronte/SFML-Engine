@@ -47,7 +47,7 @@
 #define new new(_NORMAL_BLOCK, __FILE__, __LINE__)													// Memory leaks
 #define Super __super
 #define FILE_NAME (strrchr(__FILE__, '\\') ? strrchr(__FILE__, '\\') + 1 : __FILE__)
-#define DEBUG_INFO "(File : " + FILE_NAME + " | Func : " + CAST(std::string, PATH) + " | Line : " + std::to_string(__LINE__) + ")"
+#define DEBUG_INFO std::string("(File : " + CAST(std::string, FILE_NAME) + " | Func : " + CAST(std::string, PATH) + " | Line : " + std::to_string(__LINE__) + ")")
 #define FORCEINLINE __forceinline
 #define INLINE __inline
 #define CAST(_type, _expr) static_cast<_type>(_expr)

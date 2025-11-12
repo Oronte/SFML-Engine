@@ -21,13 +21,13 @@ namespace engine::Math
     inline Real Sqrt(Real _x)
     {
         if (_x < CAST(Real, 0))
-            throw Exception(std::format("Sqrt: negative input => _x = {} (must be >= 0)", _x));
+            TROW_EXCEPTION(std::format("Sqrt: negative input => _x = {} (must be >= 0)", _x));
         return CAST(Real, std::sqrt(_x));
     }
     inline Real InvSqrt(Real _x)
     {
         if (_x <= CAST(Real, 0))
-            throw Exception(std::format("InvSqrt: non-positive input => _x = {} (must be > 0)", _x));
+            TROW_EXCEPTION(std::format("InvSqrt: non-positive input => _x = {} (must be > 0)", _x));
         return CAST(Real, 1) / Sqrt(_x);
     }
     inline Real Pow(Real _base, int _exp) noexcept
@@ -41,13 +41,13 @@ namespace engine::Math
     inline Real Log(Real _x)
     {
         if (_x <= CAST(Real, 0))
-            throw Exception(std::format("Log: non-positive input => _x = {} (must be > 0)", _x));
+            TROW_EXCEPTION(std::format("Log: non-positive input => _x = {} (must be > 0)", _x));
         return CAST(Real, std::log(_x));
     }
     inline Real Log10(const Real& _x)
     {
         if (_x <= CAST(Real, 0))
-            throw Exception(std::format("Log10: non-positive input => _x = {} (must be > 0)", _x));
+            TROW_EXCEPTION(std::format("Log10: non-positive input => _x = {} (must be > 0)", _x));
         return CAST(Real, std::log10(_x));
     }
 
@@ -67,13 +67,13 @@ namespace engine::Math
     inline Real Asin(const Real& _x)
     {
         if (_x < CAST(Real, -1) || _x > CAST(Real, 1))
-            throw Exception(std::format("Asin: input out of range => _x = {} (must be in [-1, 1])", _x));
+            TROW_EXCEPTION(std::format("Asin: input out of range => _x = {} (must be in [-1, 1])", _x));
         return CAST(Real, std::asin(_x));
     }
     inline Real Acos(const Real& _x)
     {
         if (_x < CAST(Real, -1) || _x > CAST(Real, 1))
-            throw Exception(std::format("Acos: input out of range => _x = {} (must be in [-1, 1])", _x));
+            TROW_EXCEPTION(std::format("Acos: input out of range => _x = {} (must be in [-1, 1])", _x));
         return CAST(Real, std::acos(_x));
     }
     inline Real Atan(const Real& _x) noexcept
@@ -83,7 +83,7 @@ namespace engine::Math
     inline Real Atan2(const Real& _y, const Real& _x)
     {
         if (_x == CAST(Real, 0) && _y == CAST(Real, 0))
-            throw Exception(std::format("Atan2: undefined for _x = {} and _y = {} (both 0)", _x, _y));
+            TROW_EXCEPTION(std::format("Atan2: undefined for _x = {} and _y = {} (both 0)", _x, _y));
         return CAST(Real, std::atan2(_y, _x));
     }
 

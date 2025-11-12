@@ -27,7 +27,7 @@ namespace engine
 		}
 
 	public:
-		void Update();
+		void Update(const float _deltaTime);
 	};
 
 }
