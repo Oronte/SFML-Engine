@@ -18,7 +18,7 @@ void Engine::Update()
 {
 	while (level)
 	{
-		const float _deltaTime = M_TIMER.Update();
+		const float& _deltaTime = M_TIMER.Update();
 		level->Update(_deltaTime);
 	}
 }

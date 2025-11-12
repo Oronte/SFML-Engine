@@ -12,7 +12,7 @@ engine::Level::Level(const std::string& _name, const UVector2& _windowSize, cons
 		CAST(sf::State, _isFullscreen));
 }
 
-void Level::Update(const float _deltaTime)
+void Level::Update(const float& _deltaTime)
 {
 	window.clear();
 	window.display();

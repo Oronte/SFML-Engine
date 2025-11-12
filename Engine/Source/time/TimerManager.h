@@ -2,6 +2,8 @@
 #include "utils/Singleton.h"
 #include "Timer.h"
 
+#define M_TIMER engine::TimerManager::GetInstance()
+
 namespace engine
 {
 	class TimerManager : public Singleton<TimerManager>
