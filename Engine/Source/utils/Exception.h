@@ -1,7 +1,7 @@
 #pragma once
 #include "Macro.h"
 
-#define TROW_EXCEPTION(_msg) throw Exception(_msg, DEBUG_INFO);
+#define THROW_EXCEPTION(_msg) throw Exception(_msg, DEBUG_INFO);
 
 namespace engine
 {

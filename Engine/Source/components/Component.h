@@ -16,8 +16,10 @@ namespace engine
 			return owner;
 		}
 
-	public:
+	protected:
 		Component(Actor* _owner);
+
+	public:
 		virtual ~Component() = default;
 
 	public:
@@ -28,6 +30,8 @@ namespace engine
 		virtual void Tick(const float& _deltaTime) override {};
 		virtual void LateTick(const float& _deltaTime) override {};
 		virtual void BeginDestroy() override {};
+
+		virtual std::string ToString() const override;
 	};
 
 

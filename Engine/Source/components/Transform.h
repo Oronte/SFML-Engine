@@ -1,5 +1,5 @@
 #pragma once
-#include "actors/Transformable.h"
+#include "Transformable.h"
 #include "Component.h"
 
 namespace engine
@@ -74,6 +74,11 @@ namespace engine
 
 	public:
 		Transform(Actor* _owner, const TransformData& _transform = TransformData());
+
+		virtual std::string ToString() const override
+		{
+			return "Transform : " + transform.ToString();
+		}
 	};
 }
 

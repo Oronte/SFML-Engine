@@ -17,3 +17,9 @@ void Component::Deconstruct()
 {
 	SetActive(false);
 }
+
+std::string engine::Component::ToString() const
+{
+	if (!owner) return "Component wath no owner";
+	return "Component : owner = " + owner->ToString();
+}

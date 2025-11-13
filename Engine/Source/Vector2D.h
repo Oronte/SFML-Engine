@@ -5,7 +5,7 @@ namespace engine
 {
 
     template<typename T>
-    struct Vector2D
+    struct Vector2D : public IPrintable
     {
         static_assert(std::is_arithmetic_v<T>, "Vector2<T> requires an arithmetic type T");
 
@@ -280,18 +280,12 @@ namespace engine
         }
 
 
-        std::string ToString() const
+        virtual std::string ToString() const override
         {
             return std::format("X : {}, Y : {}", x, y);
         }
 
         #pragma region Operators
-
-        friend std::ostream& operator << (std::ostream& _os, const Vector2D& _vector)
-        {
-            _os << _vector.ToString();
-            return _os;
-        }
 
         operator sf::Vector2<T>() const noexcept
         {
@@ -312,7 +306,7 @@ namespace engine
         }
         constexpr Vector2D operator / (const Vector2D& _other) const
         {
-            if (_other.x == 0 || _other.y == 0) TROW_EXCEPTION("Can't divide by zero !");
+            if (_other.x == 0 || _other.y == 0) THROW_EXCEPTION("Can't divide by zero !");
             return Vector2D(CAST(T, x / _other.x), CAST(T, y / _other.y));
         }
 
@@ -336,7 +330,7 @@ namespace engine
         }
         Vector2D& operator /= (const Vector2D& _other) 
         { 
-            if (_other.x == 0 || _other.y == 0) TROW_EXCEPTION("Can't divide by zero !");
+            if (_other.x == 0 || _other.y == 0) THROW_EXCEPTION("Can't divide by zero !");
             x = CAST(T, x / _other.x);
             y = CAST(T, y / _other.y);
             return *this;
@@ -351,7 +345,7 @@ namespace engine
         template<typename U, typename = std::enable_if_t<std::is_arithmetic_v<U>>>
         constexpr auto operator/(U _scalar) const noexcept
         {
-            if (_scalar == 0) TROW_EXCEPTION("Can't divide by zero !");
+            if (_scalar == 0) THROW_EXCEPTION("Can't divide by zero !");
 
             using R = std::common_type_t<T, U>;
             return Vector2D<R>(CAST(R, x / _scalar), CAST(R, y / _scalar));
@@ -367,7 +361,7 @@ namespace engine
         template<typename U, typename = std::enable_if_t<std::is_arithmetic_v<U>>>
         Vector2D& operator/=(U _scalar) noexcept
         {
-            if (_scalar == 0) TROW_EXCEPTION("Can't divide by zero !");
+            if (_scalar == 0) THROW_EXCEPTION("Can't divide by zero !");
 
             using R = std::common_type_t<T, U>;
             x = CAST(T, CAST(R, x) / CAST(R, _scalar));

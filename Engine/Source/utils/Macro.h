@@ -18,6 +18,11 @@
 #include <mutex>
 #include <format>
 #include <limits>
+#include <optional>
+#include <type_traits>
+#include <utility>
+#include <cstddef>
+#include <memory>
 
 // OLD
 #include <math.h>

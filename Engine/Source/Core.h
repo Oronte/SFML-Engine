@@ -4,7 +4,7 @@
 namespace engine
 {
 
-	class Core
+	class Core : public IPrintable
 	{
 		bool isActive = false;
 
@@ -26,6 +26,11 @@ namespace engine
 		virtual void Tick(const float& _deltaTime) = 0;
 		virtual void LateTick(const float& _deltaTime) = 0;
 		virtual void BeginDestroy() = 0;
+
+		virtual std::string ToString() const override
+		{
+			return std::format("Core : isActive = {}", isActive);
+		}
 	};
 
 

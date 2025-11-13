@@ -1,6 +1,7 @@
 #pragma once
 #include "Exception.h"
 #include "Color.h"
+#include "Printable.h"
 
 #define DEBUG
 #ifdef DEBUG
@@ -9,14 +10,14 @@
 #define USE_DEBUG 0
 #endif // DEBUG
 
-#define LOG(_verbosity, _msg)   engine::Logger::PrintLog(_verbosity, CAST(std::string, _msg), DEBUG_INFO)
+#define LOG(_verbosity, _msg)   engine::Logger::PrintLog(_verbosity, _msg, DEBUG_INFO)
 #define WRITE_IN_LOG(_verbosity)        _verbosity >= engine::VerbosityType::Log
 #define WRITE_IN_CONSOLE(_verbosity)    _verbosity > engine::VerbosityType::Log
 
 namespace engine
 {
 
-    enum class VerbosityType
+    enum VerbosityType
     {
         VeryVerbose,
         Verbose,
@@ -57,7 +58,7 @@ namespace engine
         {
             if (_type >= VerbosityType::COUNT)
             {
-                TROW_EXCEPTION(std::format("Invalid VerbosityType ! _type = {} and must be < {}", CAST(int, _type), CAST(int, VerbosityType::COUNT)));
+                THROW_EXCEPTION(std::format("Invalid VerbosityType ! _type = {} and must be < {}", CAST(int, _type), CAST(int, VerbosityType::COUNT)));
             }
 
             const std::vector<Gradient>& _verbosityColors =
@@ -77,7 +78,7 @@ namespace engine
         {
             if (_type >= VerbosityType::COUNT)
             {
-                TROW_EXCEPTION(std::format("Invalid VerbosityType ! _type = {} and must be < {}", CAST(int, _type), CAST(int, VerbosityType::COUNT)));
+                THROW_EXCEPTION(std::format("Invalid VerbosityType ! _type = {} and must be < {}", CAST(int, _type), CAST(int, VerbosityType::COUNT)));
             }
 
             const std::vector<std::string>& _verbosityTexts =
@@ -109,6 +110,7 @@ namespace engine
     public:
         static void Reset();
         static void PrintLog(const VerbosityType& _type, const std::string& _text, const std::string& _debug = "");
+        static void PrintLog(const VerbosityType& _type, const IPrintable& _object, const std::string& _debug = "");
     };
 
 }
