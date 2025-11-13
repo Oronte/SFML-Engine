@@ -59,6 +59,8 @@ float TimerManager::Update()
 
 void TimerManager::Pause()
 {
+	onPauseTimer.Broadcast();
+
 	for (Timer* _timer : allTimers)
 	{
 		_timer->Pause();
@@ -67,6 +69,8 @@ void TimerManager::Pause()
 
 void TimerManager::Resume()
 {
+	onResumeTimer.Broadcast();
+
 	for (Timer* _timer : allTimers)
 	{
 		_timer->Resume();
@@ -75,6 +79,8 @@ void TimerManager::Resume()
 
 void TimerManager::Stop()
 {
+	onStopTimer.Broadcast();
+
 	for (Timer* _timer : allTimers)
 	{
 		_timer->Stop();

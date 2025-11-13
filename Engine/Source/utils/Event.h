@@ -1,5 +1,5 @@
 #pragma once
-#include "Macro.h"
+#include "Logger.h"
 
 
 namespace engine
@@ -27,19 +27,13 @@ namespace engine
         using Iterator = typename std::vector<Listener>::iterator;
 
     public:
-        struct ListenerOptions
-        {
-            bool once = false;
-            int priority = 0;
-        };
-
         Event() = default;
         ~Event() = default;
 
         Event(const Event&) = delete;
         Event& operator=(const Event&) = delete;
 
-        ListenerId AddListener(Callback _callback, ListenerOptions _options = {})
+        ListenerId AddListener(Callback _callback, const bool& _once = false, const int& _priority = 0)
         {
             if (!_callback) 
                 THROW_EXCEPTION("There is no callback for the event");
@@ -48,8 +42,8 @@ namespace engine
             Listener _listener;
             _listener.id = _id;
             _listener.callback = std::move(_callback);
-            _listener.isOnce = _options.once;
-            _listener.priority = _options.priority;
+            _listener.isOnce = _once;
+            _listener.priority = _priority;
 
             Iterator _iterator = std::upper_bound(
                 listeners.begin(), listeners.end(), _listener,
@@ -60,7 +54,7 @@ namespace engine
         }
 
         template<typename T>
-        ListenerId AddListener(T* _instance, void(T::* _memberFunc)(Args...), ListenerOptions _options = {})
+        ListenerId AddListener(T* _instance, void(T::* _memberFunc)(Args...), const bool& _once = false, const int& _priority = 0)
         {
             if (!_instance) 
                 THROW_EXCEPTION("The instance for the callback is nullptr");
@@ -70,11 +64,11 @@ namespace engine
                     (_instance->*_memberFunc)(std::forward<Args>(args)...);
                 };
 
-            return AddListener(std::move(_callback), _options);
+            return AddListener(std::move(_callback), _once, _priority);
         }
 
         template<typename T>
-        ListenerId AddListener(T* _instance, void(T::* _memberFunc)(Args...) const, ListenerOptions _options = {})
+        ListenerId AddListener(T* _instance, void(T::* _memberFunc)(Args...) const, const bool& _once = false, const int& _priority = 0)
         {
             if (!_instance) 
                 THROW_EXCEPTION("The instance for the callback is nullptr");
@@ -84,7 +78,7 @@ namespace engine
                     (_instance->*_memberFunc)(std::forward<Args>(args)...);
                 };
 
-            return AddListener(std::move(_callback), _options);
+            return AddListener(std::move(_callback), _once, _priority);
         }
 
         void RemoveListener(ListenerId _id)
@@ -170,6 +164,7 @@ namespace engine
     //
     //  _firstEvent.Broadcast(1, 2);
     // 
+    //  engine::Event<> _event; // for Func with no parrams and ne returning type
     // 
     //////////////////////////////////////////////////////////////////
     
@@ -244,6 +239,8 @@ namespace engine
     //  
     //
     //  int _int = _firstDelegate.Broadcast(1, 2);
+    // 
+    //  engine::Delegate<void()> _delegate; // for Func with no parrams and ne returning type
     // 
     // 
     //////////////////////////////////////////////////////////////////

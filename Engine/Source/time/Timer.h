@@ -5,6 +5,14 @@ namespace engine
 {
 	class Timer
 	{
+	public:
+		Event<> onStart;
+		Event<> onStop;
+		Event<> onResume;
+		Event<> onReset;
+		Event<> onPause;
+
+	private:
 		bool isToDelete;
 		bool isRunning;
 		bool isLoop;
@@ -51,6 +59,6 @@ namespace engine
 
 /////////////////////////////////////////////////////////////
 // 
-// 
+// TODO Timer exemple
 // 
 /////////////////////////////////////////////////////////////

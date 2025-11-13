@@ -10,6 +10,12 @@ namespace engine
 	{
 		friend Timer;
 
+	public:
+		Event<> onPauseTimer;
+		Event<> onResumeTimer;
+		Event<> onStopTimer;
+
+	private:
 		// An object that contains all the time data.
 		sf::Clock clock;
 		// Time since the start of the program

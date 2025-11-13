@@ -10,6 +10,8 @@ Engine::Engine(Level* _level)
 
 void Engine::Start()
 {
+	onEngineStart.Broadcast();
+	onEngineStart.Broadcast();
 	Update();
 	Stop();
 }
@@ -25,5 +27,6 @@ void Engine::Update()
 
 void Engine::Stop()
 {
+	onEngineStop.Broadcast();
 	delete level;
 }

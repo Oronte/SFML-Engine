@@ -6,6 +6,11 @@ namespace engine
 
 	class Engine
 	{
+	public:
+		Event<> onEngineStart;
+		Event<> onEngineStop;
+
+	private:
 		Level* level = nullptr;
 		
 	public:

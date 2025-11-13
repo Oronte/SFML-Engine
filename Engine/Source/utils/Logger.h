@@ -17,7 +17,7 @@
 namespace engine
 {
 
-    enum VerbosityType
+    enum class VerbosityType
     {
         VeryVerbose,
         Verbose,
@@ -98,6 +98,8 @@ namespace engine
     public:
         std::string RetrieveFullText(const bool& _useColor = true, const bool& _useTime = true) const;
     };
+
+
 
     class Logger
     {
