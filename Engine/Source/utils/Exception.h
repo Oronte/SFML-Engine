@@ -1,7 +1,7 @@
 #pragma once
 #include "Macro.h"
 
-#define THROW_EXCEPTION(_msg) throw Exception(_msg, DEBUG_INFO);
+#define THROW_EXCEPTION(_msg) throw engine::Exception(_msg, DEBUG_INFO);
 
 namespace engine
 {
@@ -12,22 +12,12 @@ namespace engine
         Error message;
 
     public:
-        Exception(const Error& _error, const Error& _debugInfo = "") :
-            message(_error + " " + _debugInfo)
-        {
-            if (_debugInfo == "") message += DEBUG_INFO;
-        }
+        Exception(const Error& _error, const Error& _debugInfo = "");
 
     private:
-        NO_DISCARD virtual const char* what() const noexcept override
-        {
-            return message.c_str();
-        }
+        NO_DISCARD virtual const char* what() const noexcept override;
     public:
-        NO_DISCARD Error What() const
-        {
-            return what();
-        }
+        NO_DISCARD const char* What() const;
     };
 
 }

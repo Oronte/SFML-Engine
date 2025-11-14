@@ -16,11 +16,6 @@ project "Game"
 	  "../Engine/Source"
    }
 
-   libdirs 
-   {
-      "../ThirdParty/SFML-3.0.0/lib"
-   }
-
    links
    {
       "Engine"
@@ -43,9 +38,3 @@ project "Game"
        runtime "Release"
        optimize "On"
        symbols "On"
-
-   filter "configurations:Dist"
-       defines { "DIST" }
-       runtime "Release"
-       optimize "On"
-       symbols "Off"

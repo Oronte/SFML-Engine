@@ -33,7 +33,7 @@ namespace engine
         Event(const Event&) = delete;
         Event& operator=(const Event&) = delete;
 
-        ListenerId AddListener(Callback _callback, const bool& _once = false, const int& _priority = 0)
+        ListenerId AddListener(Callback&& _callback, const bool& _once = false, const int& _priority = 0)
         {
             if (!_callback) 
                 THROW_EXCEPTION("There is no callback for the event");
@@ -41,7 +41,7 @@ namespace engine
             ListenerId _id = nextId++;
             Listener _listener;
             _listener.id = _id;
-            _listener.callback = std::move(_callback);
+            _listener.callback = _callback;
             _listener.isOnce = _once;
             _listener.priority = _priority;
 
@@ -54,12 +54,12 @@ namespace engine
         }
 
         template<typename T>
-        ListenerId AddListener(T* _instance, void(T::* _memberFunc)(Args...), const bool& _once = false, const int& _priority = 0)
+        ListenerId AddListener(T* _instance, void(T::* _memberFunc)(Args&&...), const bool& _once = false, const int& _priority = 0)
         {
             if (!_instance) 
                 THROW_EXCEPTION("The instance for the callback is nullptr");
 
-            Callback _callback = [_instance, _memberFunc](Args... args)
+            Callback _callback = [_instance, _memberFunc](Args&&... args)
                 {
                     (_instance->*_memberFunc)(std::forward<Args>(args)...);
                 };
@@ -68,12 +68,12 @@ namespace engine
         }
 
         template<typename T>
-        ListenerId AddListener(T* _instance, void(T::* _memberFunc)(Args...) const, const bool& _once = false, const int& _priority = 0)
+        ListenerId AddListener(T* _instance, void(T::* _memberFunc)(Args&&...) const, const bool& _once = false, const int& _priority = 0)
         {
             if (!_instance) 
                 THROW_EXCEPTION("The instance for the callback is nullptr");
 
-            Callback _callback = [_instance, _memberFunc](Args... args)
+            Callback _callback = [_instance, _memberFunc](Args&&... args)
                 {
                     (_instance->*_memberFunc)(std::forward<Args>(args)...);
                 };
@@ -114,7 +114,7 @@ namespace engine
             return _count;
         }
 
-        void Broadcast(Args... _args)
+        void Broadcast(Args&&... _args)
         {
             for (Listener& _listener : listeners)
             {
@@ -126,12 +126,12 @@ namespace engine
             CleanupIfNeeded();
         }
 
-        void operator()(Args... _args)
+        void operator()(Args&&... _args)
         {
             Broadcast(std::forward<Args>(_args)...);
         }
 
-        void operator += (Callback _callback)
+        void operator += (Callback&& _callback)
         {
             AddListener(_callback);
         }
@@ -179,7 +179,7 @@ namespace engine
         Callback callback;
 
     public:
-        void SetCallback(Callback _callback)
+        void SetCallback(Callback&& _callback)
         {
             if (!_callback)
                 THROW_EXCEPTION("There is no callback for the delegate");
@@ -187,12 +187,12 @@ namespace engine
             callback = _callback;
         }
         template<typename T>
-        void SetCallback(T* _instance, R(T::* _memberFunc)(Args...))
+        void SetCallback(T* _instance, R(T::* _memberFunc)(Args&&...))
         {
             if (!_instance)
                 THROW_EXCEPTION("The instance for the callback is nullptr");
 
-            Callback _callback = [_instance, _memberFunc](Args... _args) -> R
+            Callback _callback = [_instance, _memberFunc](Args&&... _args) -> R
                 {
                     return (_instance->*_memberFunc)(std::forward<Args>(_args)...);
                 };
@@ -205,21 +205,19 @@ namespace engine
             callback = nullptr;
         }
 
-        R Broadcast(Args... _args)
+        R Broadcast(Args&&... _args)
         {
             if (!callback)
-            {
                 THROW_EXCEPTION("You broadcast a delegate who does not have a callback");
-            }
              
             return callback(std::forward<Args>(_args)...);
         }
 
-        void operator()(Args... _args)
+        void operator()(Args&&... _args)
         {
             Broadcast(std::forward<Args>(_args)...);
         }
-        void operator = (Callback _callback)
+        void operator = (Callback&& _callback)
         {
             SetCallback(_callback);
         }

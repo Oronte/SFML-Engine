@@ -5,7 +5,7 @@ namespace engine
 {
     unsigned int GetUniqueID()
     {
-        static unsigned int _uniqueId = 0;
+        static unsigned long long _uniqueId = 0;
         return ++_uniqueId;
     }
 

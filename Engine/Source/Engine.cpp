@@ -11,7 +11,6 @@ Engine::Engine(Level* _level)
 void Engine::Start()
 {
 	onEngineStart.Broadcast();
-	onEngineStart.Broadcast();
 	Update();
 	Stop();
 }

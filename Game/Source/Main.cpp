@@ -1,17 +1,25 @@
-#include "Engine.h"
+﻿#include "Engine.h"
 #include "utils/Event.h"
 
-void OnEngineStart()
+void InitConfig()
 {
-	LOG(engine::VerbosityType::Error, "Engine started...");
+#ifdef _MSC_VER
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+#endif
+	engine::Logger::Init();
 }
 
 int main()
 {
+
 	try
 	{
+		
+		std::cout << MAKE_GLOBAL_PATH("test");
+
 		engine::Engine _engine = engine::Engine(new engine::Level("first level"));
-		_engine.onEngineStart.AddListener(OnEngineStart, true);
+		_engine.onEngineStart.AddListener(InitConfig);
+		_engine.onEngineStop.AddListener(engine::Logger::Shutdown);
 		_engine.Start();
 	}
 	catch (const engine::Exception& _exception)
