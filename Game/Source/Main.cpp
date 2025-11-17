@@ -1,5 +1,7 @@
 ﻿#include "Engine.h"
 #include "utils/Event.h"
+#include "actors/Actor.h"
+#include "components/Transform.h"
 
 void InitConfig()
 {
@@ -14,8 +16,8 @@ int main()
 
 	try
 	{
-		
-		std::cout << MAKE_GLOBAL_PATH("test");
+		engine::Actor _actor;
+		LOG(engine::VerbosityType::Display, _actor.GetTransform());
 
 		engine::Engine _engine = engine::Engine(new engine::Level("first level"));
 		_engine.onEngineStart.AddListener(InitConfig);

@@ -35,8 +35,11 @@ namespace engine
 
         ListenerId AddListener(Callback&& _callback, const bool& _once = false, const int& _priority = 0)
         {
-            if (!_callback) 
-                THROW_EXCEPTION("There is no callback for the event");
+            if (!_callback)
+            {
+                LOG(VerbosityType::Warning, "There is no callback for the event");
+                return 0;
+            }
 
             ListenerId _id = nextId++;
             Listener _listener;
@@ -56,8 +59,11 @@ namespace engine
         template<typename T>
         ListenerId AddListener(T* _instance, void(T::* _memberFunc)(Args&&...), const bool& _once = false, const int& _priority = 0)
         {
-            if (!_instance) 
-                THROW_EXCEPTION("The instance for the callback is nullptr");
+            if (!_instance)
+            {
+                LOG(VerbosityType::Warning, "The instance for the callback is nullptr");
+                return 0;
+            }
 
             Callback _callback = [_instance, _memberFunc](Args&&... args)
                 {
@@ -70,8 +76,11 @@ namespace engine
         template<typename T>
         ListenerId AddListener(T* _instance, void(T::* _memberFunc)(Args&&...) const, const bool& _once = false, const int& _priority = 0)
         {
-            if (!_instance) 
-                THROW_EXCEPTION("The instance for the callback is nullptr");
+            if (!_instance)
+            {
+                LOG(VerbosityType::Warning, "The instance for the callback is nullptr");
+                return 0;
+            }
 
             Callback _callback = [_instance, _memberFunc](Args&&... args)
                 {
@@ -182,7 +191,10 @@ namespace engine
         void SetCallback(Callback&& _callback)
         {
             if (!_callback)
-                THROW_EXCEPTION("There is no callback for the delegate");
+            {
+                LOG(VerbosityType::Warning, "There is no callback for the delegate");
+                return;
+            }
 
             callback = _callback;
         }
@@ -190,7 +202,10 @@ namespace engine
         void SetCallback(T* _instance, R(T::* _memberFunc)(Args&&...))
         {
             if (!_instance)
-                THROW_EXCEPTION("The instance for the callback is nullptr");
+            {
+                LOG(VerbosityType::Warning, "The instance for the callback is nullptr");
+                return;
+            }
 
             Callback _callback = [_instance, _memberFunc](Args&&... _args) -> R
                 {
@@ -208,7 +223,10 @@ namespace engine
         R Broadcast(Args&&... _args)
         {
             if (!callback)
-                THROW_EXCEPTION("You broadcast a delegate who does not have a callback");
+            {
+                LOG(VerbosityType::Warning, "You broadcast a delegate who does not have a callback");
+                return;
+            }
              
             return callback(std::forward<Args>(_args)...);
         }

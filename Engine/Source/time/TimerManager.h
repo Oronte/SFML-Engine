@@ -1,11 +1,12 @@
 #pragma once
 #include "utils/Singleton.h"
-#include "Timer.h"
 
 #define M_TIMER engine::TimerManager::GetInstance()
 
 namespace engine
 {
+	class Timer;
+
 	class TimerManager : public Singleton<TimerManager>
 	{
 		friend Timer;
@@ -16,79 +17,75 @@ namespace engine
 		Event<> onStopTimer;
 
 	private:
-		// An object that contains all the time data.
-		sf::Clock clock;
-		// Time since the start of the program
-		float time;
-		// Temporarily stores the previous frame duration.
-		float lastTime;
-		// Update the FPS counter
-		float lastFrameTime;
-		// Time since the last image was rendered
-		float elapsedTime;
-		// Time since the last image was rendered with the 'timeScale'
-		float deltaTime;
-		// The speed at which time passes
-		float timeScale;
-		// Number of images that have been rendered since the beginning of the program.
-		long long int framesCount;
-		// Maximum number of images to render per second
-		unsigned short maxFrameRate;
-		std::set<Timer*> allTimers;
+		sf::Clock clock;				// An object that contains all the time data.
+
+		float lastTimeStamp;			// Timestamp of previous frame (seconds)
+		float lastFrameDuration;		// Duration of last frame (raw, seconds)
+		float deltaTime;				// Scaled frame duration (lastFrameDuration * timeScale)
+		float elapsedTime;				// Raw frame duration
+		float timeScale;				// Time speed multiplier
+
+		long long framesCount;			// Total number of frames since program start
+		unsigned short maxFrameRate;	// Frame rate cap (0 = unlimited)
+		float fps;						
+		float smoothedFPS;				// Smoothed FPS for stable display
+
+		std::vector<std::unique_ptr<Timer>> allTimers;
 
 	private:
 		FORCEINLINE float GetTime(const sf::Time& _time) const
 		{
 			return _time.asSeconds();
 		}
-		FORCEINLINE std::string ComputeTime(const int _value) const
+		FORCEINLINE std::string TwoDigitsTime(const int& _value) const
 		{
 			if (_value >= 10) return std::to_string(_value);
 			return "0" + std::to_string(_value);
 		}
+	
 	public:
-		FORCEINLINE std::string GetCurrentRealTime() const
+		FORCEINLINE float GetDeltaTime() const
 		{
-			const time_t& _now = std::time(0);
-
-			tm _ltm;
-			localtime_s(&_ltm, &_now);
-
-			const std::string& _date = ComputeTime(_ltm.tm_mday) + "/" + ComputeTime(1 + _ltm.tm_mon) + "/" + ComputeTime(1900 + _ltm.tm_year);
-			const std::string& _time = ComputeTime(_ltm.tm_hour) + ":" + ComputeTime(_ltm.tm_min) + ":" + ComputeTime(_ltm.tm_sec);
-
-			return _date + " " + _time;
+			return deltaTime;
 		}
-		FORCEINLINE void AddTimer(Timer* _timer)
+		FORCEINLINE float GetElapsedTime() const
 		{
-			allTimers.insert(_timer);
+			return elapsedTime;
 		}
-		FORCEINLINE void RemoveTimer(Timer* _timer)
+		FORCEINLINE float GetInstantFPS() const
 		{
-			if (!allTimers.contains(_timer)) return;
-
-			_timer->Stop();
-			allTimers.erase(_timer);
-			delete _timer;
+			return fps;
+		}
+		// Use for display
+		FORCEINLINE float GetSmoothedFPS() const
+		{
+			return smoothedFPS;
 		}
 		FORCEINLINE void SetTimerScale(const float& _timeScale)
 		{
 			timeScale = _timeScale;
 		}
-		FORCEINLINE float ComputeFPS() const
+		FORCEINLINE void SetMaxFrameRate(const unsigned short& _fps)
 		{
-			return 1.0f / (time - lastFrameTime); // 1.0f is for seconds (replace it by 1000.0f for milliseconds)
+			maxFrameRate = _fps;
 		}
-		FORCEINLINE sf::Time GetDeltaTime() const
+		FORCEINLINE unsigned short GetMaxFrameRate() const
 		{
-			return sf::Time(sf::seconds(CAST(float, deltaTime * 1.0f))); // 1.0f is for seconds (replace it by 1000.0f for milliseconds)
+			return maxFrameRate;
 		}
+		
 
 	public:
 		TimerManager();
 		~TimerManager();
 
+		void AddTimer(Timer* _timer);
+		void RemoveTimer(Timer* _timer);
+
+		std::string GetCurrentRealTime() const;
+
 		float Update();
+
 		void Pause();
 		void Resume();
 		void Stop();

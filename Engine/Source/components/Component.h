@@ -4,6 +4,7 @@
 namespace engine
 {
 	class Actor;
+	class Transform;
 
 	class Component : public Core
 	{
@@ -15,6 +16,7 @@ namespace engine
 		{
 			return owner;
 		}
+		Transform* GetTransform() const;
 
 	protected:
 		Component(Actor* _owner);

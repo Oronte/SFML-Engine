@@ -3,6 +3,15 @@
 
 using namespace engine;
 
+engine::VerbosityData::VerbosityData(const VerbosityType& _type, const std::string& _text, const std::string& _debug, const bool& _useDebug)
+{
+    ComputeUseDebug(_type);
+    ComputeColor(_type);
+    ComputePrefix(_type);
+    text = _text;
+    debug = _debug;
+}
+
 /// VerbosityData
 std::string VerbosityData::RetrieveFullText(const bool& _useColor, const bool& _useTime) const
 {
@@ -161,6 +170,9 @@ void Logger::Reset()
 
 void Logger::PrintLog(const VerbosityType& _type, const std::string& _text, const std::string& _debug)
 {
+    if (!running) 
+        std::cout << "You printed a log but the Logger is not running (call => engine::Logger::Init()) " << DEBUG_INFO << std::endl;
+
     if (CanPrintInLog(_type))
     {
         const VerbosityData& _verbosity = VerbosityData(_type, _text, _debug);
@@ -175,4 +187,14 @@ void Logger::PrintLog(const VerbosityType& _type, const std::string& _text, cons
 void engine::Logger::PrintLog(const VerbosityType& _type, const IPrintable& _object, const std::string& _debug)
 {
     PrintLog(_type, _object.ToString(), _debug);
+}
+
+void engine::Logger::PrintLog(const VerbosityType& _type, const IPrintable* _object, const std::string& _debug)
+{
+    if (!_object)
+    {
+        LOG(engine::VerbosityType::Warning, "You try to print a IPrintable ptr but it's nullptr");
+        return;
+    }
+    PrintLog(_type, _object->ToString(), _debug);
 }

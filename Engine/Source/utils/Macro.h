@@ -72,4 +72,3 @@
 #define TYPE_INDEX_NAME(_typeIndex)		CAST(std::string, _typeIndex.name())
 #define NAME_OF(var)					#var
 #define CURRENT_PATH					std::filesystem::current_path().string()
-#define MAKE_GLOBAL_PATH(_localPath)	CURRENT_PATH + "\" + _localPath

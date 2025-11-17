@@ -71,27 +71,15 @@ namespace engine
 
 	struct ColorData
 	{
-		int r;
-		int g;
-		int b;
+		short r;
+		short g;
+		short b;
 
-		ColorData()
-		{
-			r = g = b = 0;
-		}
+		ColorData();
 
-		ColorData(const int& _r, const int& _g, const int& _b)
-		{
-			r = _r;
-			g = _g;
-			b = _b;
-		}
+		ColorData(const short& _r, const short& _g, const short& _b);
 
-		std::string ToString(const bool& _textOnly) const
-		{
-			if (_textOnly) return TEXT_RGB(r, g, b);
-			return BG_RGB(r, g, b);
-		}
+		std::string ToString(const bool& _textOnly = true) const;
 	};
 
 	struct Gradient
@@ -100,11 +88,7 @@ namespace engine
 		ColorData gradB;
 
 		Gradient() = default;
-		Gradient(const ColorData& _a, const ColorData& _b)
-		{
-			gradA = _a;
-			gradB = _b;
-		}
+		Gradient(const ColorData& _a, const ColorData& _b);
 
 		std::string GradientString(const std::string& _text, const bool& _textOnly = true) const;
 		ColorData ClampGradient(const int& _index, const int& _maxDisplayChar) const;

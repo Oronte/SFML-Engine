@@ -38,14 +38,7 @@ namespace engine
 
     public:
         VerbosityData(const VerbosityType& _type, const std::string& _text, const std::string& _debug,
-            const bool& _useDebug = false)
-        {
-            ComputeUseDebug(_type);
-            ComputeColor(_type);
-            ComputePrefix(_type);
-            text = _text;
-            debug = _debug;
-        }
+            const bool& _useDebug = false);
 
         std::string RetrieveFullText(const bool& _useColor = true, const bool& _useTime = true) const;
 
@@ -85,6 +78,7 @@ namespace engine
         static void Reset();
         static void PrintLog(const VerbosityType& _type, const std::string& _text, const std::string& _debug = "");
         static void PrintLog(const VerbosityType& _type, const IPrintable& _object, const std::string& _debug = "");
+        static void PrintLog(const VerbosityType& _type, const IPrintable* _object, const std::string& _debug = "");
     };
 
 }

@@ -1,7 +1,13 @@
 #include "Component.h"
 #include "actors/Actor.h"
+#include "Transform.h"
 
 using namespace engine;
+
+Transform* Component::GetTransform() const
+{
+	return owner ? owner->GetTransform() : nullptr;
+}
 
 Component::Component(Actor* _owner)
 {

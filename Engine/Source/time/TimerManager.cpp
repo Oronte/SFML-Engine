@@ -1,88 +1,156 @@
 #include "TimerManager.h"
+#include "Timer.h"
 
 using namespace engine;
 
-TimerManager::TimerManager()
+engine::TimerManager::TimerManager()
 {
-	clock = sf::Clock();
-	time = 0.0f;
-	lastTime = 0.0f;
-	lastFrameTime = 0.0f;
-	elapsedTime = 0.0f;
+	lastTimeStamp = -1.0f;
+	lastFrameDuration = 0.0f;
 	deltaTime = 0.0f;
+	elapsedTime = 0.0f;
 	timeScale = 1.0f;
 	framesCount = 0;
 	maxFrameRate = 60;
-	allTimers = std::set<Timer*>();
+    fps = 0;
+	smoothedFPS = 60.0f;
 }
 
-TimerManager::~TimerManager()
+engine::TimerManager::~TimerManager()
 {
-	for (Timer* _timer : allTimers)
-	{
-		delete _timer;
-	}
+	allTimers.clear();
 }
 
-float TimerManager::Update()
+void engine::TimerManager::AddTimer(Timer* _timer)
 {
-	lastTime = time;
-	time = GetTime(clock.getElapsedTime());
-	elapsedTime = time - lastTime;
-	deltaTime = elapsedTime * timeScale;
-	framesCount++;
-
-	if (lastFrameTime == 0 || time - lastFrameTime <= maxFrameRate)
+	if (!_timer)
 	{
-		lastFrameTime = time;
-		framesCount = 0;
+		LOG(VerbosityType::Warning, "Try to add nullptr timer");
+		return;
 	}
 
-	using Iterator = std::set<Timer*>::iterator;
-	for (Iterator _iterator = allTimers.begin(); _iterator != allTimers.end(); )
-	{
-		Timer* _timer = *_iterator;
-		_timer->Update(deltaTime);
-
-		if (_timer->IsToDelete())
-		{
-			--_iterator;
-			RemoveTimer(_timer);
-			continue;
-		}
-
-		++_iterator;
-	}
-
-	return GetDeltaTime().asSeconds();
+	allTimers.emplace_back(std::unique_ptr<Timer>(_timer));
 }
 
-void TimerManager::Pause()
+void engine::TimerManager::RemoveTimer(Timer* _timer)
+{
+	if (!_timer)
+	{
+		LOG(VerbosityType::Warning, "Try to remove nullptr timer");
+		return;
+	}
+
+	std::vector<std::unique_ptr<Timer>>::iterator _iterator =
+		std::find_if(allTimers.begin(), allTimers.end(),
+		[&](const std::unique_ptr<Timer>& _currentTimer) { return _currentTimer.get() == _timer; });
+
+	if (_iterator == allTimers.end()) return;
+
+	(*_iterator)->Stop();
+	allTimers.erase(_iterator);
+}
+
+std::string engine::TimerManager::GetCurrentRealTime() const
+{
+	const time_t& _now = std::time(nullptr);
+
+	std::tm _ltm;
+
+#ifdef _MSC_VER
+	localtime_s(&_ltm, &_now);
+#else
+	localtime_r(&_now, &_ltm);
+#endif
+
+	const std::string& _date = TwoDigitsTime(_ltm.tm_mday) + "/" + TwoDigitsTime(1 + _ltm.tm_mon) + "/" + TwoDigitsTime(1900 + _ltm.tm_year);
+	const std::string& _time = TwoDigitsTime(_ltm.tm_hour) + ":" + TwoDigitsTime(_ltm.tm_min) + ":" + TwoDigitsTime(_ltm.tm_sec);
+
+	return _date + " " + _time;
+}
+
+float engine::TimerManager::Update()
+{
+	float _currentTime = GetTime(clock.getElapsedTime());
+
+    // First frame initialization
+    if (lastTimeStamp < 0.0f)
+    {
+        lastTimeStamp = _currentTime;
+        lastFrameDuration = 0.0f;
+    }
+    else
+    {
+        lastFrameDuration = _currentTime - lastTimeStamp;
+        if (lastFrameDuration < 0.0f)
+            lastFrameDuration = 0.0f;
+    }
+
+
+    if (maxFrameRate > 0)
+    {
+        float _targetFrameTime = 1.0f / static_cast<float>(maxFrameRate);
+
+        if (lastFrameDuration > 0.0f && lastFrameDuration < _targetFrameTime)
+        {
+            float _sleepTime = _targetFrameTime - lastFrameDuration;
+            sf::sleep(sf::seconds(_sleepTime));
+
+            // Recalculate correct timing after sleep
+            float _newTime = GetTime(clock.getElapsedTime());
+            lastFrameDuration = _newTime - lastTimeStamp;
+            if (lastFrameDuration < 0.0f) lastFrameDuration = 0.0f;
+
+            _currentTime = _newTime;
+        }
+    }
+
+
+    lastTimeStamp = _currentTime;
+    elapsedTime = lastFrameDuration;
+    deltaTime = lastFrameDuration * timeScale;
+    framesCount++;
+
+
+    if (lastFrameDuration > 0.0f)
+    {
+        fps = 1.0f / lastFrameDuration;
+        constexpr float _smoothingFactor = 0.1f;
+        smoothedFPS = (1.0f - _smoothingFactor) * smoothedFPS + _smoothingFactor * fps;
+    }
+
+    for (std::vector<std::unique_ptr<Timer>>::iterator _iterator = allTimers.begin(); _iterator != allTimers.end(); )
+    {
+        Timer* _timer = _iterator->get();
+        _timer->Update(deltaTime);
+
+        if (_timer->IsToDelete())
+        {
+            _timer->Stop();
+            _iterator = allTimers.erase(_iterator);
+        }
+        else ++_iterator;
+    }
+
+    return deltaTime;
+}
+
+void engine::TimerManager::Pause()
 {
 	onPauseTimer.Broadcast();
 
-	for (Timer* _timer : allTimers)
-	{
-		_timer->Pause();
-	}
+	for (std::unique_ptr<Timer>& _timer : allTimers) _timer->Pause();
 }
 
-void TimerManager::Resume()
+void engine::TimerManager::Resume()
 {
 	onResumeTimer.Broadcast();
 
-	for (Timer* _timer : allTimers)
-	{
-		_timer->Resume();
-	}
+	for (std::unique_ptr<Timer>& _timer : allTimers) _timer->Resume();
 }
 
-void TimerManager::Stop()
+void engine::TimerManager::Stop()
 {
 	onStopTimer.Broadcast();
 
-	for (Timer* _timer : allTimers)
-	{
-		_timer->Stop();
-	}
+	for (std::unique_ptr<Timer>& _timer : allTimers) _timer->Stop();
 }
