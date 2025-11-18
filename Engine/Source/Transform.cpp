@@ -5,11 +5,11 @@ using namespace engine;
 engine::Transform::Transform()
 {
 	origin = position = FVector2();
-	rotation = sf::Angle();
+	rotation = Angle();
 	scale = FVector2(1.0f);
 }
 
-engine::Transform::Transform(const FVector2& _position, const sf::Angle& _rotation, const FVector2& _scale)
+engine::Transform::Transform(const FVector2& _position, const Angle& _rotation, const FVector2& _scale)
 {
 	origin = FVector2();
 	position = _position;
@@ -17,7 +17,7 @@ engine::Transform::Transform(const FVector2& _position, const sf::Angle& _rotati
 	scale = _scale;
 }
 
-engine::Transform::Transform(const FVector2& _origin, const FVector2& _position, const sf::Angle& _rotation, const FVector2& _scale)
+engine::Transform::Transform(const FVector2& _origin, const FVector2& _position, const Angle& _rotation, const FVector2& _scale)
 {
 	origin = _origin;
 	position = _position;
@@ -29,7 +29,7 @@ std::string engine::Transform::ToString() const
 {
 	return std::format("Position = {} | Rotation (degrees) = {} | Scale = {} | Origin = {}",
 		position.ToString(),
-		rotation.asDegrees(),
+		rotation.ToDegrees(),
 		scale.ToString(),
 		origin.ToString());
 }

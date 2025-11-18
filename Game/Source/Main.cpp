@@ -1,7 +1,6 @@
 ﻿#include "Engine.h"
-#include "utils/Event.h"
 #include "actors/Actor.h"
-#include "components/Transform.h"
+#include "utils/Math.h"
 
 void InitConfig()
 {
@@ -16,8 +15,11 @@ int main()
 
 	try
 	{
-		engine::Actor _actor;
-		LOG(engine::VerbosityType::Display, _actor.GetTransform());
+		engine::Angle _angle(engine::Math<float>::pi);
+		engine::Angle _angle2(engine::Math<float>::pi * -3.5f);
+		engine::FMath::Sqrt(-4);
+
+		std::cout << _angle.SmallestDifferenceRadians(_angle2) << std::endl;
 
 		engine::Engine _engine = engine::Engine(new engine::Level("first level"));
 		_engine.onEngineStart.AddListener(InitConfig);

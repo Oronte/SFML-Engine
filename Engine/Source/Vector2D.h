@@ -9,7 +9,7 @@ namespace engine
     {
         static_assert(std::is_arithmetic_v<T>, "Vector2<T> requires an arithmetic type T");
 
-        using CalcType = std::common_type_t<T, Math::Real>;
+        using CalcType = std::common_type_t<T, float>;
 
         T x;
         T y;

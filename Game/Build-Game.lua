@@ -11,8 +11,6 @@ project "Game"
    {
       "Source",
       "../ThirdParty/SFML-3.0.0/include",
-
-	  -- Include Core
 	  "../Engine/Source"
    }
 

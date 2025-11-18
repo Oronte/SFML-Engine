@@ -1,7 +1,7 @@
 -- premake5.lua
 workspace "Engine-SFML"
    architecture "x64"
-   configurations { "Debug", "Release", "Dist" }
+   configurations { "Debug", "Release" }
    startproject "Game"
 
    -- Workspace-wide build options for MSVC

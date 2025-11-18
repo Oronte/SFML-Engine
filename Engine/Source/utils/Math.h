@@ -4,11 +4,12 @@
 namespace engine
 {
 
+    template<typename Real>
 	class Math
 	{
-    public:
-        using Real = float; // Change to double if you prefer higher precision
+        static_assert(std::is_arithmetic_v<Real>, "Math<Real> requires an arithmetic type Real");
 
+    public:
         static INLINE constexpr Real pi = CAST(Real, 3.14159265358979323846);
         static INLINE constexpr Real tau = CAST(Real, 2.0 * 3.14159265358979323846);
         static INLINE constexpr Real halfPi = CAST(Real, 1.57079632679489661923);
@@ -460,4 +461,10 @@ namespace engine
         #pragma endregion
 	};
 
+    using FMath = Math<float>;
+    using IMath = Math<int>;
+    using UMath = Math<unsigned int>;
+    using DMath = Math<double>;
+    using LMath = Math<long>;
+    using SMath = Math<short>;
 }

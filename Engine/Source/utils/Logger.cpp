@@ -79,7 +79,8 @@ void engine::VerbosityData::ComputePrefix(const VerbosityType& _type)
 /// Logger
 void engine::Logger::LoggingThread()
 {
-    std::filesystem::create_directory("../Logs");
+    std::filesystem::create_directory("../Content");
+    std::filesystem::create_directory("../Content/Logs");
     std::ofstream _file(logsPath, std::ios_base::app);
 
     while (running || !logQueue.empty())

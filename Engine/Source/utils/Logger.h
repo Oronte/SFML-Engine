@@ -52,7 +52,7 @@ namespace engine
 
     class Logger
     {
-        static INLINE std::string logsPath = "../Logs/log.txt";
+        static INLINE std::string logsPath = "../Content/Logs/log.txt";
 
         static INLINE std::queue<std::string> logQueue;
         static INLINE std::queue<std::string> consoleQueue;

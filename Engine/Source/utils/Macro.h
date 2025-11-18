@@ -23,10 +23,7 @@
 #include <utility>
 #include <cstddef>
 #include <memory>
-
-// OLD
 #include <cmath>
-//#include <conio.h>
 
 // Collections
 #include <vector>
