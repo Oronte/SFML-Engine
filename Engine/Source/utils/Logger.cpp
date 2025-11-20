@@ -44,13 +44,13 @@ void engine::VerbosityData::ComputeColor(const VerbosityType& _type)
 
     const std::vector<Gradient>& _verbosityColors =
     {
-        Gradient(ColorData(27, 27, 33), ColorData(37, 37, 51)),         //VERY VERBOSE
-        Gradient(ColorData(55, 55, 61), ColorData(69, 69, 93)),         //VERBOSE
-        Gradient(ColorData(100, 100, 119), ColorData(143, 143, 194)),   //LOG
-        Gradient(ColorData(221, 221, 246), ColorData(122, 122, 236)),   //DISPLAY
-        Gradient(ColorData(255, 231, 0), ColorData(255, 76, 17)),       //WARNING
-        Gradient(ColorData(193, 6, 11), ColorData(249, 56, 67)),        //ERROR
-        Gradient(ColorData(255, 0, 95), ColorData(118, 37, 184)),       //FATAL
+        Gradient(Color(27, 27, 33), Color(37, 37, 51)),         //VERY VERBOSE
+        Gradient(Color(55, 55, 61), Color(69, 69, 93)),         //VERBOSE
+        Gradient(Color(100, 100, 119), Color(143, 143, 194)),   //LOG
+        Gradient(Color(221, 221, 246), Color(122, 122, 236)),   //DISPLAY
+        Gradient(Color(255, 231, 0), Color(255, 76, 17)),       //WARNING
+        Gradient(Color(193, 6, 11), Color(249, 56, 67)),        //ERROR
+        Gradient(Color(255, 0, 95), Color(118, 37, 184)),       //FATAL
     };
 
     color = _verbosityColors[CAST(int, _type)];

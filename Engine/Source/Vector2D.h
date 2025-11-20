@@ -1,5 +1,6 @@
 #pragma once
 #include "utils/Math.h"
+#include "Printable.h"
 
 namespace engine
 {
@@ -372,12 +373,12 @@ namespace engine
         #pragma endregion
     };
 
-    using FVector2 = Vector2D<float>;
-    using IVector2 = Vector2D<int>;
-    using UVector2 = Vector2D<unsigned int>;
-    using DVector2 = Vector2D<double>;
-    using LVector2 = Vector2D<long>;
-    using SVector2 = Vector2D<short>;
+    using FVector2 = engine::Vector2D<float>;
+    using IVector2 = engine::Vector2D<int>;
+    using UVector2 = engine::Vector2D<unsigned int>;
+    using DVector2 = engine::Vector2D<double>;
+    using LVector2 = engine::Vector2D<long>;
+    using SVector2 = engine::Vector2D<short>;
 
 }
 

@@ -1,0 +1,76 @@
+#pragma once
+#include "Image.h"
+
+namespace engine
+{
+
+	class Texture
+	{
+		sf::Texture texture;
+
+	public:
+        INLINE std::uint32_t GetNativeHandle() const
+        {
+            return texture.getNativeHandle();
+        }
+        INLINE UVector2 GetSize() const
+        {
+            return UVector2(texture.getSize());
+        }
+        INLINE bool IsRepeated() const
+        {
+            return texture.isRepeated();
+        }
+        INLINE void SetRepeated(bool _repeated)
+        {
+            texture.setRepeated(_repeated);
+        }
+        INLINE bool IsSmooth() const
+        {
+            return texture.isSmooth();
+        }
+        INLINE void SetSmooth(bool _smooth)
+        {
+            texture.setSmooth(_smooth);
+        }
+        INLINE bool IsSrgb() const
+        {
+            return texture.isSrgb();
+        }
+
+
+		Texture() {}
+        explicit Texture(const std::string& _path, const bool& _rgb = false);
+        Texture(const std::string& _path, const bool& _rgb, const IRect& _area);
+        Texture(const void* data, std::size_t _size, const bool& _rgb = false);
+        Texture(const void* data, std::size_t _size, const bool& _rgb, const IRect& _area);
+        explicit Texture(const Image& _image, const bool& _rgb = false);
+        Texture(const Image& _image, const bool& _rgb, const IRect& _area);
+        explicit Texture(const UVector2& _size, const bool& _rgb = false);
+        explicit Texture(const sf::Texture& _texture);
+
+        bool Resize(const UVector2& _size, const bool& _sRgb = false);
+
+        bool LoadFromFile(const std::string& _filename, const bool& _sRgb = false, const IRect& _area = IRect{});
+        bool LoadFromMemory(const void* _data, const std::size_t& _size, const bool& _rgb = false, const IRect& _area = IRect{});
+        bool LoadFromImage(const Image& _image, const bool& _rgb = false, const IRect& _area = IRect{});
+
+        void Bind(const Texture* _texture, const bool& _isNoralize = true);
+
+        Image CopyToImage() const;
+
+        bool GenerateMipmap();
+
+        INLINE static unsigned int GetMaximumSize()
+        {
+            return sf::Texture::getMaximumSize();
+        }
+
+
+        INLINE operator sf::Texture() const noexcept
+        {
+            return texture;
+        }
+	};
+
+}

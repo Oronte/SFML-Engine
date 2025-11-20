@@ -1,5 +1,6 @@
 #pragma once
 #include "Macro.h"
+#include "Exception.h"
 
 namespace engine
 {
@@ -461,10 +462,10 @@ namespace engine
         #pragma endregion
 	};
 
-    using FMath = Math<float>;
-    using IMath = Math<int>;
-    using UMath = Math<unsigned int>;
-    using DMath = Math<double>;
-    using LMath = Math<long>;
-    using SMath = Math<short>;
+    using FMath = engine::Math<float>;
+    using IMath = engine::Math<int>;
+    using UMath = engine::Math<unsigned int>;
+    using DMath = engine::Math<double>;
+    using LMath = engine::Math<long>;
+    using SMath = engine::Math<short>;
 }

@@ -1,26 +1,26 @@
 #pragma once
 #include "Macro.h"
 
-#define BLACK "\x1B[38;5;232m"
-#define DARK_GRAY "\x1B[38;5;237m"
-#define GRAY "\x1B[38;5;244m"
-#define LIGHT_GRAY "\x1B[38;5;249m"
-#define WHITE "\x1B[38;5;255m"
-#define DARK_RED "\x1B[38;5;124m"
-#define RED "\x1B[38;5;196m"
-#define DARK_ORANGE "\x1B[38;5;130m"
-#define ORANGE "\x1B[38;5;208m"
-#define DARK_YELLOW "\x1B[38;5;136m"
-#define YELLOW "\x1B[38;5;226m"
-#define LIME "\x1B[38;5;82m"
-#define GREEN "\x1B[38;5;106m"
-#define BLUE "\x1B[38;5;63m"
-#define LIGHT_BLUE "\x1B[38;5;12m"
-#define CYAN "\x1B[38;5;51m"
-#define PINK "\x1B[38;5;219m"
-#define MAGENTA "\x1B[38;5;199m"
-#define PURPLE "\x1B[38;5;99m"
-#define BROWN "\x1B[38;5;130m"
+#define TXT_BLACK "\x1B[38;5;232m"
+#define TXT_DARK_GRAY "\x1B[38;5;237m"
+#define TXT_GRAY "\x1B[38;5;244m"
+#define TXT_LIGHT_GRAY "\x1B[38;5;249m"
+#define TXT_WHITE "\x1B[38;5;255m"
+#define TXT_DARK_RED "\x1B[38;5;124m"
+#define TXT_RED "\x1B[38;5;196m"
+#define TXT_DARK_ORANGE "\x1B[38;5;130m"
+#define TXT_ORANGE "\x1B[38;5;208m"
+#define TXT_DARK_YELLOW "\x1B[38;5;136m"
+#define TXT_YELLOW "\x1B[38;5;226m"
+#define TXT_LIME "\x1B[38;5;82m"
+#define TXT_GREEN "\x1B[38;5;106m"
+#define TXT_BLUE "\x1B[38;5;63m"
+#define TXT_LIGHT_BLUE "\x1B[38;5;12m"
+#define TXT_CYAN "\x1B[38;5;51m"
+#define TXT_PINK "\x1B[38;5;219m"
+#define TXT_MAGENTA "\x1B[38;5;199m"
+#define TXT_PURPLE "\x1B[38;5;99m"
+#define TXT_BROWN "\x1B[38;5;130m"
 
 #define BG_BLACK "\x1B[48;5;232m"
 #define BG_DARK_GRAY "\x1B[48;5;237m"
@@ -69,30 +69,48 @@
 namespace engine
 {
 
-	struct ColorData
+	class Color
 	{
-		short r;
-		short g;
-		short b;
+	public:
+		std::uint8_t r;
+		std::uint8_t g;
+		std::uint8_t b;
+		std::uint8_t a;
 
-		ColorData();
+		constexpr Color() noexcept;
+		constexpr Color(const std::uint8_t& _r, const std::uint8_t& _g, const std::uint8_t& _b, const std::uint8_t& _a = 255) noexcept;
+		constexpr explicit Color(const std::uint32_t& _color) noexcept;
+		constexpr Color(const sf::Color& _color) noexcept;
 
-		ColorData(const short& _r, const short& _g, const short& _b);
+		constexpr std::uint32_t ToInteger() const noexcept;
+		std::string ToString(const bool& _textOnly) const noexcept;
 
-		std::string ToString(const bool& _textOnly = true) const;
+		INLINE operator sf::Color() const
+		{
+			return sf::Color(r, g, b, a);
+		}
+
+		static const Color black;
+		static const Color white;
+		static const Color red;
+		static const Color green;
+		static const Color blue;
+		static const Color yellow;
+		static const Color magenta;
+		static const Color cyan;
+		static const Color transparent;
 	};
 
 	struct Gradient
 	{
-		ColorData gradA;
-		ColorData gradB;
+		Color gradA;
+		Color gradB;
 
 		Gradient() = default;
-		Gradient(const ColorData& _a, const ColorData& _b);
+		Gradient(const Color& _a, const Color& _b);
 
 		std::string GradientString(const std::string& _text, const bool& _textOnly = true) const;
-		ColorData ClampGradient(const int& _index, const int& _maxDisplayChar) const;
+		Color ClampGradient(const int& _index, const int& _maxDisplayChar) const;
 	};
-
 
 }

@@ -12,6 +12,10 @@ void InitConfig()
 
 int main()
 {
+	std::cout << engine::Color::red.r << std::endl;
+	std::cout << engine::Color::red.g << std::endl;
+	std::cout << engine::Color::red.b << std::endl;
+	std::cout << engine::Color::red.a << std::endl;
 
 	try
 	{
@@ -28,7 +32,7 @@ int main()
 	}
 	catch (const engine::Exception& _exception)
 	{
-		std::cerr << DARK_RED << _exception.What() << COLOR_RESET << std::endl;
+		std::cerr << TXT_DARK_RED << _exception.What() << COLOR_RESET << std::endl;
 	}
 
 	return EXIT_SUCCESS;

@@ -1,31 +1,66 @@
 #include "Color.h"
-#include "Logger.h"
 
 using namespace engine;
 
-engine::ColorData::ColorData()
+//Color
+ 
+inline constexpr Color Color::black         { 0, 0, 0 };
+inline constexpr Color Color::white         { 255, 255, 255 };
+inline constexpr Color Color::red           { 255, 0, 0 };
+inline constexpr Color Color::green         { 0, 255, 0 };
+inline constexpr Color Color::blue          { 0, 0, 255 };
+inline constexpr Color Color::yellow        { 255, 255, 0 };
+inline constexpr Color Color::magenta       { 255, 0, 255 };
+inline constexpr Color Color::cyan          { 0, 255, 255 };
+inline constexpr Color Color::transparent   { 0, 0, 0, 0 };
+ 
+constexpr engine::Color::Color() noexcept
 {
     r = g = b = 0;
+    a = 255;
 }
 
-engine::ColorData::ColorData(const short& _r, const short& _g, const short& _b)
+constexpr engine::Color::Color(const std::uint8_t& _r, const std::uint8_t& _g, const std::uint8_t& _b, const std::uint8_t& _a) noexcept
 {
-    if (_r > 255 || _g > 255 || _b > 255)
-    {
-        LOG(VerbosityType::Warning, std::format("Color values must be between 0 and 255 : r = {} g = {} b = {}", _r, _g, _b));
-    }
-
     r = _r;
     g = _g;
     b = _b;
+    a = _a;
 }
 
-std::string engine::ColorData::ToString(const bool& _textOnly) const
+constexpr engine::Color::Color(const std::uint32_t& _color) noexcept
+{
+    r = CAST(std::uint8_t, (_color >> 24) & 0xFF);
+    g = CAST(std::uint8_t, (_color >> 16) & 0xFF);
+    b = CAST(std::uint8_t, (_color >> 8) & 0xFF);
+    a = CAST(std::uint8_t, (_color) & 0xFF);
+}
+
+constexpr engine::Color::Color(const sf::Color& _color) noexcept
+{
+    r = _color.r;
+    g = _color.g;
+    b = _color.b;
+    a = _color.a;
+}
+
+constexpr std::uint32_t engine::Color::ToInteger() const noexcept
+{
+    return (CAST(std::uint32_t, r) << 24) |
+        (CAST(std::uint32_t, g) << 16) |
+        (CAST(std::uint32_t, b) << 8) |
+        (CAST(std::uint32_t, a));
+}
+
+
+std::string engine::Color::ToString(const bool& _textOnly) const noexcept
 {
     return _textOnly ? TEXT_RGB(r, g, b) : BG_RGB(r, g, b);
 }
 
-engine::Gradient::Gradient(const ColorData& _a, const ColorData& _b)
+
+//Gradiant
+engine::Gradient::Gradient(const Color& _a, const Color& _b)
 {
     gradA = _a;
     gradB = _b;
@@ -38,13 +73,13 @@ std::string Gradient::GradientString(const std::string& _text, const bool& _text
 
     for (int _index = 0; _index < _size; _index++)
     {
-        const ColorData& _color = ClampGradient(_index, _size);
+        const Color& _color = ClampGradient(_index, _size);
         _newWord += _color.ToString(_textOnly) + _text[_index];
     }
     return _newWord + COLOR_RESET;
 }
 
-ColorData Gradient::ClampGradient(const int& _index, const int& _maxDisplayChar) const
+Color Gradient::ClampGradient(const int& _index, const int& _maxDisplayChar) const
 {
     float _normalizer;
     float _valueRed = 0;
@@ -63,8 +98,9 @@ ColorData Gradient::ClampGradient(const int& _index, const int& _maxDisplayChar)
     _normalizer = _index * (_rangeBlue / _maxDisplayChar);
     _valueBlue += (gradA.b + _normalizer);
 
-    return ColorData(
-        CAST(short, _valueRed),
-        CAST(short, _valueGreen),
-        CAST(short, _valueBlue));
+    return Color(
+        CAST(std::int8_t, _valueRed),
+        CAST(std::int8_t, _valueGreen),
+        CAST(std::int8_t, _valueBlue));
 }
+
