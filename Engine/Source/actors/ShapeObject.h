@@ -1,5 +1,6 @@
 #pragma once
-#include "CoreMinimal.h"
+#include "Texture.h"
+#include "Shape.h"
 
 namespace engine
 {
@@ -13,16 +14,25 @@ namespace engine
 
 	class ShapeObject
 	{
-		sf::Texture texture;
-		std::unique_ptr<sf::Shape> shape;
+		Texture texture;
+		std::unique_ptr<Shape> shape;
 
 	public:
+		INLINE Texture& GetTextureRef()
+		{
+			return texture;
+		}
+		INLINE Shape* GetShape()
+		{
+			return shape.get();
+		}
+
 		// Circle
-		ShapeObject(const float& _radius, const std::string& _path = "Default",
+		ShapeObject(const float& _radius, const std::string& _path = "Default", const TextureExtensionType& _textureType = TextureExtensionType::PNG,
 			const IRect& _rect = IRect(), const size_t& _pointCount = 30);
 		// Rectangle
 		ShapeObject(const FVector2& _size, const std::string& _path = "Default", const TextureExtensionType& _textureType = TextureExtensionType::PNG,
-			const bool& _isRepeated = false, const IRect& _rect = IRect());
+			const IRect& _rect = IRect(), const bool& _isRepeated = false);
 	};
 
 }

@@ -33,6 +33,10 @@ namespace engine
         {
             radians = _isDegrees ? FMath::DegToRad(_radians) : _radians;
         }
+        INLINE explicit Angle(const sf::Angle _angle)
+        {
+            radians = _angle.asRadians();
+        }
 
         INLINE static Angle FromDegrees(const float& _degrees) noexcept 
         { 

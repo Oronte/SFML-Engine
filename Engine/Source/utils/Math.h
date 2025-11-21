@@ -1,5 +1,4 @@
 #pragma once
-#include "Macro.h"
 #include "Exception.h"
 
 namespace engine

@@ -1,6 +1,5 @@
 ﻿#include "Engine.h"
-#include "actors/Actor.h"
-#include "utils/Math.h"
+#include "Texture.h"
 
 void InitConfig()
 {
@@ -12,23 +11,16 @@ void InitConfig()
 
 int main()
 {
-	std::cout << engine::Color::red.r << std::endl;
-	std::cout << engine::Color::red.g << std::endl;
-	std::cout << engine::Color::red.b << std::endl;
-	std::cout << engine::Color::red.a << std::endl;
 
 	try
 	{
-		engine::Angle _angle(engine::Math<float>::pi);
-		engine::Angle _angle2(engine::Math<float>::pi * -3.5f);
-		engine::FMath::Sqrt(-4);
+		InitConfig();
+		engine::Logger::Shutdown();
 
-		std::cout << _angle.SmallestDifferenceRadians(_angle2) << std::endl;
-
-		engine::Engine _engine = engine::Engine(new engine::Level("first level"));
-		_engine.onEngineStart.AddListener(InitConfig);
-		_engine.onEngineStop.AddListener(engine::Logger::Shutdown);
-		_engine.Start();
+		//engine::Engine _engine = engine::Engine(new engine::Level("first level"));
+		//_engine.onEngineStart.AddListener(InitConfig);
+		//_engine.onEngineStop.AddListener(engine::Logger::Shutdown);
+		//_engine.Start();
 	}
 	catch (const engine::Exception& _exception)
 	{

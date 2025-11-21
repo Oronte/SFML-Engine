@@ -90,16 +90,45 @@ namespace engine
 			return sf::Color(r, g, b, a);
 		}
 
-		static const Color black;
-		static const Color white;
-		static const Color red;
-		static const Color green;
-		static const Color blue;
-		static const Color yellow;
-		static const Color magenta;
-		static const Color cyan;
-		static const Color transparent;
+		
+		INLINE static constexpr Color Black() noexcept
+		{
+			return Color();
+		}
+		INLINE static constexpr Color White() noexcept 
+		{ 
+			return Color(255, 255, 255);
+		};
+		INLINE static constexpr Color Red() noexcept 
+		{ 
+			return Color(255, 0, 0);
+		};
+		INLINE static constexpr Color Green() noexcept 
+		{ 
+			return Color(0, 255, 0);
+		};
+		INLINE static constexpr Color Blue() noexcept 
+		{ 
+			return Color(0, 0, 255);
+		};
+		INLINE static constexpr Color Yellow() noexcept 
+		{ 
+			return Color(255, 255, 0);
+		};
+		INLINE static constexpr Color Magenta() noexcept 
+		{ 
+			return Color(255, 0, 255);
+		};
+		INLINE static constexpr Color Cyan() noexcept 
+		{ 
+			return Color(0, 255, 255);
+		};
+		INLINE static constexpr Color Transparent() noexcept 
+		{ 
+			return Color(0, 0, 0, 0);
+		};
 	};
+
 
 	struct Gradient
 	{

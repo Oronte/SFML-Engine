@@ -27,7 +27,7 @@ namespace engine
 			std::type_index _type = typeid(Type);
 			if (components.contains(_type))
 			{
-				LOG(VerbosityType::Warning, "There is already component of this type");
+				LOG(VerbosityType::Error, "There is already component of this type");
 				return nullptr;
 			}
 

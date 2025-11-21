@@ -1,17 +1,19 @@
 #include "ShapeObject.h"
+#include "CircleShape.h"
+#include "RectangleShape.h"
+#include "TextureManager.h"
 
 using namespace engine;
 
 
-
-engine::ShapeObject::ShapeObject(const float& _radius, const std::string& _path, const IRect& _rect, const size_t& _pointCount)
+engine::ShapeObject::ShapeObject(const float& _radius, const std::string& _path, const TextureExtensionType& _textureType, const IRect& _rect, const size_t& _pointCount)
 {
-	shape = std::make_unique<sf::CircleShape>(_radius, _pointCount);
-	// TODO Texture Manager
+	shape = std::make_unique<CircleShape>(_radius, _pointCount);
+	M_TEXTURE.Load(this, _path, _textureType);
 }
 
-engine::ShapeObject::ShapeObject(const FVector2& _size, const std::string& _path, const TextureExtensionType& _textureType, const bool& _isRepeated, const IRect& _rect)
+engine::ShapeObject::ShapeObject(const FVector2& _size, const std::string& _path, const TextureExtensionType& _textureType, const IRect& _rect, const bool& _isRepeated)
 {
-	shape = std::make_unique<sf::RectangleShape>(_size);
-	// TODO Texture Manager
+	shape = std::make_unique<RectangleShape>(_size);
+	M_TEXTURE.Load(this, _path, _textureType);
 }

@@ -2,18 +2,7 @@
 
 using namespace engine;
 
-//Color
- 
-inline constexpr Color Color::black         { 0, 0, 0 };
-inline constexpr Color Color::white         { 255, 255, 255 };
-inline constexpr Color Color::red           { 255, 0, 0 };
-inline constexpr Color Color::green         { 0, 255, 0 };
-inline constexpr Color Color::blue          { 0, 0, 255 };
-inline constexpr Color Color::yellow        { 255, 255, 0 };
-inline constexpr Color Color::magenta       { 255, 0, 255 };
-inline constexpr Color Color::cyan          { 0, 255, 255 };
-inline constexpr Color Color::transparent   { 0, 0, 0, 0 };
- 
+//Color 
 constexpr engine::Color::Color() noexcept
 {
     r = g = b = 0;

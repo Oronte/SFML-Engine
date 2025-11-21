@@ -25,7 +25,7 @@ void engine::TimerManager::AddTimer(Timer* _timer)
 {
 	if (!_timer)
 	{
-		LOG(VerbosityType::Warning, "Try to add nullptr timer");
+		LOG(VerbosityType::Error, "Try to add nullptr timer");
 		return;
 	}
 
@@ -36,7 +36,7 @@ void engine::TimerManager::RemoveTimer(Timer* _timer)
 {
 	if (!_timer)
 	{
-		LOG(VerbosityType::Warning, "Try to remove nullptr timer");
+		LOG(VerbosityType::Error, "Try to remove nullptr timer");
 		return;
 	}
 

@@ -34,7 +34,7 @@ std::string VerbosityData::RetrieveFullText(const bool& _useColor, const bool& _
 
 void engine::VerbosityData::ComputeUseDebug(const VerbosityType& _type)
 {
-    useDebug = std::set<VerbosityType>({ VerbosityType::Warning, VerbosityType::Error }).contains(_type);
+    useDebug = std::set<VerbosityType>({ VerbosityType::Error, VerbosityType::Error }).contains(_type);
 }
 
 void engine::VerbosityData::ComputeColor(const VerbosityType& _type)
@@ -79,8 +79,7 @@ void engine::VerbosityData::ComputePrefix(const VerbosityType& _type)
 /// Logger
 void engine::Logger::LoggingThread()
 {
-    std::filesystem::create_directory("../Content");
-    std::filesystem::create_directory("../Content/Logs");
+    std::filesystem::create_directories("../Content/Logs");
     std::ofstream _file(logsPath, std::ios_base::app);
 
     while (running || !logQueue.empty())
@@ -194,7 +193,7 @@ void engine::Logger::PrintLog(const VerbosityType& _type, const IPrintable* _obj
 {
     if (!_object)
     {
-        LOG(engine::VerbosityType::Warning, "You try to print a IPrintable ptr but it's nullptr");
+        LOG(engine::VerbosityType::Error, "You try to print a IPrintable ptr but it's nullptr");
         return;
     }
     PrintLog(_type, _object->ToString(), _debug);

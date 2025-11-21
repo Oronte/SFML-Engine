@@ -6,6 +6,7 @@ namespace engine
 
 	class Core : public IPrintable
 	{
+	protected:
 		bool isActive = false;
 
 	public:

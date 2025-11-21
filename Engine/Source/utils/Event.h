@@ -37,7 +37,7 @@ namespace engine
         {
             if (!_callback)
             {
-                LOG(VerbosityType::Warning, "There is no callback for the event");
+                LOG(VerbosityType::Error, "There is no callback for the event");
                 return 0;
             }
 
@@ -61,7 +61,7 @@ namespace engine
         {
             if (!_instance)
             {
-                LOG(VerbosityType::Warning, "The instance for the callback is nullptr");
+                LOG(VerbosityType::Error, "The instance for the callback is nullptr");
                 return 0;
             }
 
@@ -78,7 +78,7 @@ namespace engine
         {
             if (!_instance)
             {
-                LOG(VerbosityType::Warning, "The instance for the callback is nullptr");
+                LOG(VerbosityType::Error, "The instance for the callback is nullptr");
                 return 0;
             }
 
@@ -94,7 +94,7 @@ namespace engine
         {
             if (_id == 0)
             {
-                LOG(VerbosityType::Warning, "Incorrect id, cant be 0");
+                LOG(VerbosityType::Error, "Incorrect id, cant be 0");
                 return;
             }
 
@@ -107,7 +107,7 @@ namespace engine
                 needsCleanup = true;
             }
             else 
-                LOG(VerbosityType::Warning, "Incorrect id, cant remove listener");
+                LOG(VerbosityType::Error, "Incorrect id, cant remove listener");
         }
 
         void Clear()
@@ -192,7 +192,7 @@ namespace engine
         {
             if (!_callback)
             {
-                LOG(VerbosityType::Warning, "There is no callback for the delegate");
+                LOG(VerbosityType::Error, "There is no callback for the delegate");
                 return;
             }
 
@@ -203,7 +203,7 @@ namespace engine
         {
             if (!_instance)
             {
-                LOG(VerbosityType::Warning, "The instance for the callback is nullptr");
+                LOG(VerbosityType::Error, "The instance for the callback is nullptr");
                 return;
             }
 
@@ -224,7 +224,7 @@ namespace engine
         {
             if (!callback)
             {
-                LOG(VerbosityType::Warning, "You broadcast a delegate who does not have a callback");
+                LOG(VerbosityType::Error, "You broadcast a delegate who does not have a callback");
                 return;
             }
              

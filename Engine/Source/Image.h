@@ -28,13 +28,13 @@ namespace engine
 
 
 		Image();
-        explicit Image(const UVector2& _size, const Color& _color = Color::black);
+        explicit Image(const UVector2& _size, const Color& _color = Color::Black());
         Image(const UVector2& _size, const std::uint8_t* _pixels);
         explicit Image(const std::string& _path);
         Image(const void* _data, const std::size_t& _size);
         Image(const sf::Image& _image);
 
-        void Resize(const UVector2& _size, const Color& _color = Color::black);
+        void Resize(const UVector2& _size, const Color& _color = Color::Black());
         void ResizeFromPixels(const UVector2& _size, const std::uint8_t* _pixels);
 
         bool LoadFromFile(const std::string& _filename);
