@@ -1,5 +1,6 @@
 #pragma once
 #include "utils/Singleton.h"
+#include "Timer.h"
 
 #define M_TIMER engine::TimerManager::GetInstance()
 
@@ -9,26 +10,24 @@ namespace engine
 
 	class TimerManager : public Singleton<TimerManager>
 	{
-		friend Timer;
-
 	public:
 		Event<> onPauseTimer;
 		Event<> onResumeTimer;
 		Event<> onStopTimer;
 
 	private:
-		sf::Clock clock;				// An object that contains all the time data.
+		sf::Clock clock;					// An object that contains all the time data.
 
-		float lastTimeStamp;			// Timestamp of previous frame (seconds)
-		float lastFrameDuration;		// Duration of last frame (raw, seconds)
-		float deltaTime;				// Scaled frame duration (lastFrameDuration * timeScale)
-		float elapsedTime;				// Raw frame duration
-		float timeScale;				// Time speed multiplier
+		float lastTimeStamp = -1.0f;		// Timestamp of previous frame (seconds)
+		float lastFrameDuration;			// Duration of last frame (raw, seconds)
+		float deltaTime;					// Scaled frame duration (lastFrameDuration * timeScale)
+		float elapsedTime;					// Raw frame duration
+		float timeScale = 1.0f;				// Time speed multiplier
 
-		long long framesCount;			// Total number of frames since program start
-		unsigned short maxFrameRate;	// Frame rate cap (0 = unlimited)
+		long long framesCount;				// Total number of frames since program start
+		unsigned short maxFrameRate = 60;	// Frame rate cap (0 = unlimited)
 		float fps;						
-		float smoothedFPS;				// Smoothed FPS for stable display
+		float smoothedFPS = 60.0f;			// Smoothed FPS for stable display
 
 		std::vector<std::unique_ptr<Timer>> allTimers;
 
@@ -76,7 +75,7 @@ namespace engine
 		
 
 	public:
-		TimerManager();
+		TimerManager() {}
 		~TimerManager();
 
 		void AddTimer(Timer* _timer);

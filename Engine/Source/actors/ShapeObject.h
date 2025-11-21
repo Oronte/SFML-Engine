@@ -22,7 +22,7 @@ namespace engine
 		{
 			return texture;
 		}
-		INLINE Shape* GetShape()
+		INLINE Shape* GetShape() const
 		{
 			return shape.get();
 		}

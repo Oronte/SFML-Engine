@@ -1,5 +1,5 @@
 #pragma once
-#include "CoreMinimal.h"
+#include "CameraManager.h"
 
 namespace engine
 {
@@ -7,7 +7,8 @@ namespace engine
 	class Level
 	{
 		std::string name;
-		sf::RenderWindow window;
+		Window window;
+		CameraManager cameraManager;
 
 	public:
 		Level(const std::string& _name, const UVector2& _windowSize = UVector2(1920, 1080),
@@ -15,15 +16,19 @@ namespace engine
 
 		FORCEINLINE bool IsActive() const
 		{
-			return window.isOpen();
+			return window.IsOpen();
 		}
-		FORCEINLINE sf::RenderWindow& GetRenderWindow()
+		FORCEINLINE Window& GetWindow()
 		{
 			return window;
 		}
-		FORCEINLINE FVector2 GetWindowSize() const
+		FORCEINLINE UVector2 GetWindowSize() const
 		{
-			return CAST(FVector2, window.getSize());
+			return window.GetSize();
+		}
+		FORCEINLINE CameraManager GetCameraManager() const
+		{
+			return cameraManager;
 		}
 
 	public:

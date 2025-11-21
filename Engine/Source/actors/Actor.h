@@ -1,24 +1,49 @@
 #pragma once
 #include "Core.h"
 #include "components/Component.h"
+#include "Transform.h"
 
 namespace engine
 {
-	class Transform;
+
+	class Level;
 
 	class Actor : public Core
 	{
+		bool toDelete = false;
+
 	protected:
-		std::unique_ptr<Transform> transform;
 		std::unordered_map<std::type_index, std::unique_ptr<Component>> components;
+		Level* level;
+		int zOrder;
 
 	public:
-		FORCEINLINE Transform* GetTransform()
+		Transform transform;
+
+		template<typename Type = Level, IS_BASE_OF(Level, Type)>
+		FORCEINLINE Type* GetLevel()
 		{
-			return transform.get();
+			if (InstanceOf<Type>(level))
+			{
+				return level;
+			}
+
+			return Cast<Type>(level);
+		}
+		INLINE int GetZOrder()
+		{
+			return zOrder;
+		}
+		INLINE void SetZOrder(const int& _zOrder)
+		{
+			zOrder = _zOrder;
+		}
+		INLINE bool IsToDelete() const noexcept
+		{
+			return toDelete;
 		}
 
-		Actor();
+		Actor(Level* _level);
 
 	protected:
 		template <typename Type, typename ...Args, IS_BASE_OF(Component, Type)>
@@ -41,10 +66,10 @@ namespace engine
 		void Construct() override;
 		void Deconstruct() override;
 		void BeginPlay() override;
-		void EarlyTick(const float& _deltaTime) override;
 		void Tick(const float& _deltaTime) override;
-		void LateTick(const float& _deltaTime) override;
 		void BeginDestroy() override;
+		
+		void Destroy();
 	};
 
 }

@@ -23,9 +23,7 @@ namespace engine
 		virtual void Construct() = 0;
 		virtual void Deconstruct() = 0;
 		virtual void BeginPlay() = 0;
-		virtual void EarlyTick(const float& _deltaTime) = 0;
 		virtual void Tick(const float& _deltaTime) = 0;
-		virtual void LateTick(const float& _deltaTime) = 0;
 		virtual void BeginDestroy() = 0;
 
 		virtual std::string ToString() const override

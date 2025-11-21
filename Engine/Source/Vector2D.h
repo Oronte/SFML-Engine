@@ -35,6 +35,12 @@ namespace engine
             x = CAST(T, _vector.x);
             y = CAST(T, _vector.y);
         }
+        template<typename U, typename = std::enable_if_t<std::is_arithmetic_v<U>>>
+        explicit Vector2D(const Vector2D<U>& _vector) noexcept
+        {
+            x = CAST(T, _vector.x);
+            y = CAST(T, _vector.y);
+        }
 
 
         NO_DISCARD CalcType LengthSquared() const noexcept 
@@ -344,7 +350,7 @@ namespace engine
             return Vector2D<R>(CAST(R, x * _scalar), (CAST(R, y * _scalar)));
         }
         template<typename U, typename = std::enable_if_t<std::is_arithmetic_v<U>>>
-        constexpr auto operator/(U _scalar) const noexcept
+        constexpr auto operator/(U _scalar) const
         {
             if (_scalar == 0) THROW_EXCEPTION("Can't divide by zero !");
 
@@ -360,7 +366,7 @@ namespace engine
             return *this;
         }
         template<typename U, typename = std::enable_if_t<std::is_arithmetic_v<U>>>
-        Vector2D& operator/=(U _scalar) noexcept
+        Vector2D& operator/=(U _scalar)
         {
             if (_scalar == 0) THROW_EXCEPTION("Can't divide by zero !");
 

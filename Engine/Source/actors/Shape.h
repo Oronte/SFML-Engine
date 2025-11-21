@@ -11,6 +11,11 @@ namespace engine
 		std::unique_ptr<sf::Shape> shape;
 
 	public:
+        INLINE sf::Shape* Get() const noexcept
+        {
+            return shape.get();
+        }
+
         INLINE const Texture GetTexture() const
         {
             if (!shape)

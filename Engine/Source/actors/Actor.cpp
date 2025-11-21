@@ -2,9 +2,9 @@
 #include "Transform.h"
 
 
-engine::Actor::Actor()
+engine::Actor::Actor(Level* _level)
 {
-	transform = std::make_unique<Transform>();
+	level = _level;
 }
 
 void engine::Actor::SetActive(const bool& _status)
@@ -39,27 +39,11 @@ void engine::Actor::BeginPlay()
 	}
 }
 
-void engine::Actor::EarlyTick(const float& _deltaTime)
-{
-	for (std::pair<const std::type_index, std::unique_ptr<Component>>& _pair : components)
-	{
-		_pair.second->EarlyTick(_deltaTime);
-	}
-}
-
 void engine::Actor::Tick(const float& _deltaTime)
 {
 	for (std::pair<const std::type_index, std::unique_ptr<Component>>& _pair : components)
 	{
 		_pair.second->SetActive(_deltaTime);
-	}
-}
-
-void engine::Actor::LateTick(const float& _deltaTime)
-{
-	for (std::pair<const std::type_index, std::unique_ptr<Component>>& _pair : components)
-	{
-		_pair.second->LateTick(_deltaTime);
 	}
 }
 
@@ -70,4 +54,9 @@ void engine::Actor::BeginDestroy()
 		_pair.second->BeginDestroy();
 	}
 	components.clear();
+}
+
+void engine::Actor::Destroy()
+{
+	toDelete = true;
 }

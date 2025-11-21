@@ -1,20 +1,6 @@
 #include "TimerManager.h"
-#include "Timer.h"
 
 using namespace engine;
-
-engine::TimerManager::TimerManager()
-{
-	lastTimeStamp = -1.0f;
-	lastFrameDuration = 0.0f;
-	deltaTime = 0.0f;
-	elapsedTime = 0.0f;
-	timeScale = 1.0f;
-	framesCount = 0;
-	maxFrameRate = 60;
-    fps = 0;
-	smoothedFPS = 60.0f;
-}
 
 engine::TimerManager::~TimerManager()
 {

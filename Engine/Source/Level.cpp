@@ -6,14 +6,12 @@ using namespace engine;
 engine::Level::Level(const std::string& _name, const UVector2& _windowSize, const bool& _isFullscreen)
 {
 	name = _name;
-	const UVector2& _size = _isFullscreen ? UVector2(1920, 1080) : _windowSize;
-	window.create(sf::VideoMode(_size),
-		CAST(sf::String, name.c_str()),
-		CAST(sf::State, _isFullscreen));
+	window.Create(name, _windowSize, _isFullscreen);
 }
 
 void Level::Update(const float& _deltaTime)
 {
-	window.clear();
-	window.display();
+	window.Clear(Color::Black());
+	cameraManager.Render(window, false); // TODO SplitScreen
+	window.Display();
 }

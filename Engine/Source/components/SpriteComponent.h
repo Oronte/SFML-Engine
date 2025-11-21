@@ -5,6 +5,8 @@
 namespace engine
 {
 
+	class Window;
+
 	class SpriteComponent : public Component
 	{
 		std::unique_ptr<ShapeObject> shape;
@@ -17,6 +19,9 @@ namespace engine
 
 		virtual void Construct() override;
 		virtual void Deconstruct() override;
+
+		void Draw(Window& _window);
+		void SetOriginAtMiddle();
 	};
 
 }

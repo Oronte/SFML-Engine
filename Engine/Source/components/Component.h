@@ -3,20 +3,18 @@
 
 namespace engine
 {
-	class Actor;
 	class Transform;
 
 	class Component : public Core
 	{
 	protected:
-		Actor* owner;
+		class Actor* owner;
 
 	public:
 		FORCEINLINE Actor* GetOwner() const
 		{
 			return owner;
 		}
-		Transform* GetTransform() const;
 
 	protected:
 		Component(Actor* _owner);
@@ -28,9 +26,7 @@ namespace engine
 		virtual void Construct() override;
 		virtual void Deconstruct() override;
 		virtual void BeginPlay() override {};
-		virtual void EarlyTick(const float& _deltaTime) override {};
 		virtual void Tick(const float& _deltaTime) override {};
-		virtual void LateTick(const float& _deltaTime) override {};
 		virtual void BeginDestroy() override {};
 
 		virtual std::string ToString() const override;
