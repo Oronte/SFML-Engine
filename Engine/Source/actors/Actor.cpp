@@ -9,6 +9,8 @@ engine::Actor::Actor(Level* _level)
 
 void engine::Actor::SetActive(const bool& _status)
 {
+	Core::SetActive(_status);
+
 	for (std::pair<const std::type_index, std::unique_ptr<Component>>& _pair : components)
 	{
 		_pair.second->SetActive(_status);

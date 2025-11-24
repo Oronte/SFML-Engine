@@ -13,11 +13,11 @@ namespace engine
 		Event<> onPause;
 
 	private:
-		bool isToDelete;
-		bool isRunning;
-		bool isLoop;
-		float currentTime;
-		float duration;
+		bool isToDelete = false;
+		bool isRunning = false;
+		bool isLoop = false;
+		float currentTime = 0.0f;
+		float duration = 0.0f;
 		std::function<void()> callback;
 
 	public:
@@ -41,10 +41,14 @@ namespace engine
 		{
 			return currentTime;
 		}
+		FORCEINLINE float GetRemainingTime() const
+		{
+			return duration - currentTime;
+		}
 
 	public:
-		Timer(const std::function<void()>& _callback, const float& _duration, const bool _startRunning = false,
-			const bool _isLoop = false);
+		Timer(const std::function<void()>& _callback, const float& _duration, const bool& _startRunning = true,
+			const bool& _isLoop = false);
 
 	public:
 		void Start();
@@ -59,6 +63,16 @@ namespace engine
 
 /////////////////////////////////////////////////////////////
 // 
-// TODO Timer exemple
+// M_TIMER.CreateTimer([](){ LOG(engine::VerbosityType::Display, "Timer");}, 2.0f);
+// 
+// void TestTimer() 
+// {
+//	   LOG(engine::VerbosityType::Display, "Timer");
+// }
+// 
+// Timer* _timer = M_TIMER.CreateTimer(TestTimer, 2.0f);
+// _timer->Pause();
+// _timer->Resume();
+// _timer->Stop();
 // 
 /////////////////////////////////////////////////////////////

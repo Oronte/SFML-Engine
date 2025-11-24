@@ -1,6 +1,7 @@
 #pragma once
 #include "utils/Singleton.h"
 #include "Timer.h"
+#include "Engine.h"
 
 #define M_TIMER engine::TimerManager::GetInstance()
 
@@ -19,14 +20,14 @@ namespace engine
 		sf::Clock clock;					// An object that contains all the time data.
 
 		float lastTimeStamp = -1.0f;		// Timestamp of previous frame (seconds)
-		float lastFrameDuration;			// Duration of last frame (raw, seconds)
-		float deltaTime;					// Scaled frame duration (lastFrameDuration * timeScale)
-		float elapsedTime;					// Raw frame duration
+		float lastFrameDuration = 0.0f;			// Duration of last frame (raw, seconds)
+		float deltaTime = 0.0f;					// Scaled frame duration (lastFrameDuration * timeScale)
+		float elapsedTime = 0.0f;					// Raw frame duration
 		float timeScale = 1.0f;				// Time speed multiplier
 
-		long long framesCount;				// Total number of frames since program start
+		long long framesCount = 0;				// Total number of frames since program start
 		unsigned short maxFrameRate = 60;	// Frame rate cap (0 = unlimited)
-		float fps;						
+		float fps = 0.0f;						
 		float smoothedFPS = 60.0f;			// Smoothed FPS for stable display
 
 		std::vector<std::unique_ptr<Timer>> allTimers;
@@ -78,15 +79,20 @@ namespace engine
 		TimerManager() {}
 		~TimerManager();
 
-		void AddTimer(Timer* _timer);
-		void RemoveTimer(Timer* _timer);
 
+	private:
+		float Update();
+
+	public:
 		std::string GetCurrentRealTime() const;
 
-		float Update();
+		Timer* CreateTimer(const std::function<void()>& _callback, const float& _duration, const bool& _startRunning = true,
+			const bool& _isLoop = false);
 
 		void Pause();
 		void Resume();
 		void Stop();
+
+		friend void Engine::Update();
 	};
 }

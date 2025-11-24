@@ -1,19 +1,14 @@
 #include "Timer.h"
-#include "TimerManager.h"
 
 using namespace engine;
 
-Timer::Timer(const std::function<void()>& _callback, const float& _duration, const bool _startRunning,
-	const bool _isLoop)
+Timer::Timer(const std::function<void()>& _callback, const float& _duration, const bool& _startRunning,
+	const bool& _isLoop)
 {
-	isToDelete = false;
 	isRunning = _startRunning;
 	isLoop = _isLoop;
-	currentTime = 0.0;
 	duration = _duration;
 	callback = _callback;
-
-	TimerManager::GetInstance().AddTimer(this);
 }
 
 void Timer::Start()
@@ -33,9 +28,7 @@ void Timer::Update(const float& _deltaTime)
 	{
 		if (callback) callback();
 
-		if (!isLoop) Stop();
-
-		Reset();
+		isLoop ? Reset() : Stop();
 	}
 }
 

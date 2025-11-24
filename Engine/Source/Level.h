@@ -1,4 +1,6 @@
 #pragma once
+#include "Window.h"
+#include "ActorManager.h"
 #include "CameraManager.h"
 
 namespace engine
@@ -9,6 +11,8 @@ namespace engine
 		std::string name;
 		Window window;
 		CameraManager cameraManager;
+		ActorManager actorManager;
+		Color backgroundColor = Color::Black();
 
 	public:
 		Level(const std::string& _name, const UVector2& _windowSize = UVector2(1920, 1080),
@@ -26,12 +30,17 @@ namespace engine
 		{
 			return window.GetSize();
 		}
-		FORCEINLINE CameraManager GetCameraManager() const
+		CameraManager& GetCameraManager()
 		{
 			return cameraManager;
 		}
+		ActorManager& GetActorManager()
+		{
+			return actorManager;
+		}
 
 	public:
+		virtual void Load();
 		void Update(const float& _deltaTime);
 	};
 

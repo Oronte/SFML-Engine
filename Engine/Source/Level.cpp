@@ -1,5 +1,6 @@
 #include "Level.h"
 
+
 using namespace engine;
 
 
@@ -9,9 +10,15 @@ engine::Level::Level(const std::string& _name, const UVector2& _windowSize, cons
 	window.Create(name, _windowSize, _isFullscreen);
 }
 
+void Level::Load()
+{
+	actorManager.BeginPlay();
+}
+
 void Level::Update(const float& _deltaTime)
 {
-	window.Clear(Color::Black());
+	window.Clear(backgroundColor);
 	cameraManager.Render(window, false); // TODO SplitScreen
 	window.Display();
+	actorManager.Update(_deltaTime);
 }

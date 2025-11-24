@@ -61,7 +61,6 @@ namespace engine
 			return _component.get();
 		}
 
-	public:
 		virtual void SetActive(const bool& _status) override;
 		void Construct() override;
 		void Deconstruct() override;
@@ -69,7 +68,10 @@ namespace engine
 		void Tick(const float& _deltaTime) override;
 		void BeginDestroy() override;
 		
+	public:
 		void Destroy();
+
+		friend class ActorManager;
 	};
 
 }

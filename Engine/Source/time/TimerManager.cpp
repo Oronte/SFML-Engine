@@ -7,35 +7,6 @@ engine::TimerManager::~TimerManager()
 	allTimers.clear();
 }
 
-void engine::TimerManager::AddTimer(Timer* _timer)
-{
-	if (!_timer)
-	{
-		LOG(VerbosityType::Error, "Try to add nullptr timer");
-		return;
-	}
-
-	allTimers.emplace_back(std::unique_ptr<Timer>(_timer));
-}
-
-void engine::TimerManager::RemoveTimer(Timer* _timer)
-{
-	if (!_timer)
-	{
-		LOG(VerbosityType::Error, "Try to remove nullptr timer");
-		return;
-	}
-
-	std::vector<std::unique_ptr<Timer>>::iterator _iterator =
-		std::find_if(allTimers.begin(), allTimers.end(),
-		[&](const std::unique_ptr<Timer>& _currentTimer) { return _currentTimer.get() == _timer; });
-
-	if (_iterator == allTimers.end()) return;
-
-	(*_iterator)->Stop();
-	allTimers.erase(_iterator);
-}
-
 std::string engine::TimerManager::GetCurrentRealTime() const
 {
 	const time_t& _now = std::time(nullptr);
@@ -52,6 +23,13 @@ std::string engine::TimerManager::GetCurrentRealTime() const
 	const std::string& _time = TwoDigitsTime(_ltm.tm_hour) + ":" + TwoDigitsTime(_ltm.tm_min) + ":" + TwoDigitsTime(_ltm.tm_sec);
 
 	return _date + " " + _time;
+}
+
+Timer* engine::TimerManager::CreateTimer(const std::function<void()>& _callback, const float& _duration, const bool& _startRunning, const bool& _isLoop)
+{
+    return allTimers.emplace_back(
+        std::make_unique<Timer>(_callback, _duration, _startRunning, _isLoop)
+    ).get();
 }
 
 float engine::TimerManager::Update()
@@ -124,19 +102,19 @@ void engine::TimerManager::Pause()
 {
 	onPauseTimer.Broadcast();
 
-	for (std::unique_ptr<Timer>& _timer : allTimers) _timer->Pause();
+	for (const std::unique_ptr<Timer>& _timer : allTimers) _timer->Pause();
 }
 
 void engine::TimerManager::Resume()
 {
 	onResumeTimer.Broadcast();
 
-	for (std::unique_ptr<Timer>& _timer : allTimers) _timer->Resume();
+	for (const std::unique_ptr<Timer>& _timer : allTimers) _timer->Resume();
 }
 
 void engine::TimerManager::Stop()
 {
 	onStopTimer.Broadcast();
 
-	for (std::unique_ptr<Timer>& _timer : allTimers) _timer->Stop();
+	for (const std::unique_ptr<Timer>& _timer : allTimers) _timer->Stop();
 }

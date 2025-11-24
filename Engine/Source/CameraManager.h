@@ -1,6 +1,5 @@
 #pragma once
 #include "components/CameraComponent.h"
-#include "Window.h"
 #include "components/SpriteComponent.h"
 #include "actors/Actor.h"
 

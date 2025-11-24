@@ -1,13 +1,5 @@
 #include "ActorManager.h"
 
-engine::ActorManager::ActorManager()
-{
-}
-
-engine::ActorManager::~ActorManager()
-{
-}
-
 void engine::ActorManager::BeginPlay()
 {
 	for (Actor* _actor : actors) _actor->BeginPlay();

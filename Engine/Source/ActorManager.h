@@ -1,7 +1,6 @@
 #pragma once
 #include "actors/Actor.h"
 
-
 namespace engine
 {
 
@@ -24,9 +23,9 @@ namespace engine
 			actors.erase(std::remove(actors.begin(), actors.end(), _actor), actors.end());
 		}
 
-		ActorManager();
-		~ActorManager();
+		ActorManager() {}
 
+	public:
 		void BeginPlay();
 		void Update(const float& _deltaTime);
 		void BeginDestroy();

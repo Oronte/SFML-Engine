@@ -7,7 +7,7 @@ namespace engine
 	class Core : public IPrintable
 	{
 	protected:
-		bool isActive = false;
+		bool isActive = true;
 
 	public:
 		FORCEINLINE virtual void SetActive(const bool& _active)
