@@ -8,4 +8,5 @@ void engine::CameraManager::Render(Window& _window, const bool& splitScreen)
 
 		for (SpriteComponent* _sprite : _sprites) _sprite->Draw(_window);
 	}
+	
 }

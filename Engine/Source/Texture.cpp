@@ -1,5 +1,10 @@
 #include "Texture.h"
 
+engine::Texture::Texture()
+{
+	texture = std::make_unique<sf::Texture>();
+}
+
 engine::Texture::Texture(const std::string& _path, const bool& _rgb)
 {
 	texture = std::make_unique<sf::Texture>(std::filesystem::path(_path), _rgb);

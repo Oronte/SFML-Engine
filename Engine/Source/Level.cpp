@@ -8,6 +8,8 @@ engine::Level::Level(const std::string& _name, const UVector2& _windowSize, cons
 {
 	name = _name;
 	window.Create(name, _windowSize, _isFullscreen);
+
+	window.SetIcon(Image(UVector2(1), Color::Red())); // TODO Make this cutomable
 }
 
 void Level::Load()

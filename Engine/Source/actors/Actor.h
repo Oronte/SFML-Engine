@@ -13,7 +13,7 @@ namespace engine
 		bool toDelete = false;
 
 	protected:
-		std::unordered_map<std::type_index, std::unique_ptr<Component>> components;
+		std::vector<std::unique_ptr<Component>> components;
 		Level* level;
 		int zOrder;
 
@@ -49,16 +49,17 @@ namespace engine
 		template <typename Type, typename ...Args, IS_BASE_OF(Component, Type)>
 		FORCEINLINE Type* CreateComponent(Args&&... _args)
 		{
-			std::type_index _type = typeid(Type);
-			if (components.contains(_type))
+			if (GetComponent<Type>())
 			{
 				LOG(VerbosityType::Error, "There is already component of this type");
 				return nullptr;
 			}
 
-			std::unique_ptr<Type> _component = std::make_unique<Type>(this, forward<Args>(_args)...);
-			components.emplace(_type, std::move(_component));
-			return _component.get();
+			std::unique_ptr<Type> _component = std::make_unique<Type>(this, std::forward<Args>(_args)...);
+			Type* _rawComponent = _component.get();
+			components.push_back(std::move(_component));
+			_rawComponent->Construct();
+			return _rawComponent;
 		}
 
 		virtual void SetActive(const bool& _status) override;
@@ -69,6 +70,14 @@ namespace engine
 		void BeginDestroy() override;
 		
 	public:
+		template <typename Type, typename ...Args, IS_BASE_OF(Component, Type)>
+		FORCEINLINE Type* GetComponent()
+		{
+			for (const std::unique_ptr<Component>& _component : components)
+				if (Type* _castedComponent = Cast<Type>(_component.get())) return _castedComponent;
+
+			return nullptr;
+		}
 		void Destroy();
 
 		friend class ActorManager;

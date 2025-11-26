@@ -1,5 +1,6 @@
 #include "Actor.h"
 #include "Transform.h"
+#include "Level.h"
 
 
 engine::Actor::Actor(Level* _level)
@@ -11,49 +12,49 @@ void engine::Actor::SetActive(const bool& _status)
 {
 	Core::SetActive(_status);
 
-	for (std::pair<const std::type_index, std::unique_ptr<Component>>& _pair : components)
+	for (const std::unique_ptr<Component>& _component : components)
 	{
-		_pair.second->SetActive(_status);
+		_component->SetActive(_status);
 	}
 }
 
 void engine::Actor::Construct()
 {
-	for (std::pair<const std::type_index, std::unique_ptr<Component>>& _pair : components)
+	for (const std::unique_ptr<Component>& _component : components)
 	{
-		_pair.second->Construct();
+		_component->Construct();
 	}
 }
 
 void engine::Actor::Deconstruct()
 {
-	for (std::pair<const std::type_index, std::unique_ptr<Component>>& _pair : components)
+	for (const std::unique_ptr<Component>& _component : components)
 	{
-		_pair.second->Deconstruct();
+		_component->Deconstruct();
 	}
 }
 
 void engine::Actor::BeginPlay()
 {
-	for (std::pair<const std::type_index, std::unique_ptr<Component>>& _pair : components)
+	for (const std::unique_ptr<Component>& _component : components)
 	{
-		_pair.second->BeginPlay();
+		_component->BeginPlay();
 	}
 }
 
 void engine::Actor::Tick(const float& _deltaTime)
 {
-	for (std::pair<const std::type_index, std::unique_ptr<Component>>& _pair : components)
+	for (const std::unique_ptr<Component>& _component : components)
 	{
-		_pair.second->SetActive(_deltaTime);
+		_component->Tick(_deltaTime);
 	}
 }
 
 void engine::Actor::BeginDestroy()
 {
-	for (std::pair<const std::type_index, std::unique_ptr<Component>>& _pair : components)
+	for (const std::unique_ptr<Component>& _component : components)
 	{
-		_pair.second->BeginDestroy();
+		_component->BeginDestroy();
 	}
 	components.clear();
 }

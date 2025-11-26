@@ -27,7 +27,7 @@ project "Engine"
 
    filter "configurations:Debug"
        defines { "DEBUG" }
-       links { "sfml-graphics", "sfml-window", "sfml-system", "sfml-audio", "sfml-network" }
+       links { "sfml-graphics-d", "sfml-window-d", "sfml-system-d", "sfml-audio-d", "sfml-network-d" }
        runtime "Debug"
        symbols "On"
 

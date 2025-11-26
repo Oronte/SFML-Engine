@@ -70,7 +70,7 @@ namespace engine
         }
 
 
-		Texture() {}
+        Texture();
         explicit Texture(const std::string& _path, const bool& _rgb = false);
         Texture(const std::string& _path, const bool& _rgb, const IRect& _area);
         Texture(const void* data, std::size_t _size, const bool& _rgb = false);

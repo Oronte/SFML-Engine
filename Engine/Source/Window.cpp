@@ -1,5 +1,12 @@
 #include "Window.h"
 #include "actors/ShapeObject.h"
+#include "components/CameraComponent.h"
+#include "Vertices.h"
+
+void engine::Window::SetView(const CameraComponent* _camera)
+{
+	window.setView(*_camera->GetView());
+}
 
 void engine::Window::Create(const std::string& _name, const UVector2& _windowSize, const bool& _isFullscreen)
 {
@@ -22,6 +29,11 @@ void engine::Window::Display()
 void engine::Window::Close()
 {
 	window.close();
+}
+
+void engine::Window::Draw(const sf::Drawable& _drawable)
+{
+	window.draw(_drawable);
 }
 
 void engine::Window::Draw(const ShapeObject& _drawable)

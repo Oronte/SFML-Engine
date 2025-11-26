@@ -7,8 +7,13 @@ namespace engine
 	class CameraComponent : public Component
 	{
 		std::unique_ptr<sf::View> view;
+		//bool attachedToOwner = true; // TODO Attach camera to owner
 
 	public:
+		FORCEINLINE sf::View* GetView() const
+		{
+			return view.get();
+		}
 		FORCEINLINE FRect GetViewport() const
 		{
 			return view->getViewport();

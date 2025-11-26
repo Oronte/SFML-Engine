@@ -7,6 +7,8 @@ namespace engine
 {
 	
 	class ShapeObject;
+	class CameraComponent;
+	class Vertices;
 
 	class Window
 	{
@@ -57,6 +59,7 @@ namespace engine
 		{
 			window.requestFocus();
 		}
+		void SetView(const CameraComponent* _camera);
 
 		Window() {}
 
@@ -65,6 +68,7 @@ namespace engine
 		void Display();
 		void Close();
 
+		void Draw(const sf::Drawable& _drawable);
 		void Draw(const ShapeObject& _drawable);
 	};
 

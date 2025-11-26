@@ -2,14 +2,14 @@
 #include "utils/Singleton.h"
 #include "actors/ShapeObject.h"
 
-#define M_TEXTURE TextureManager::GetInstance()
+#define M_TEXTURE engine::TextureManager::GetInstance()
 
 namespace engine
 {
 
 	class TextureManager : public Singleton<TextureManager>
 	{
-		std::string localPath = "Content/Textures/";
+		std::string localPath = "../Content/Textures/StarterContent/";
 		std::string defaultTexturePath = "Default";
 		std::string defaultTextureExtension = "png";
 		Texture defaultTexture;
@@ -19,6 +19,7 @@ namespace engine
 
 	private:
 		void LoadDefaultTexture();
+		void SetTextureToDefault(Texture& _texture);
 		void LoadTexture(Texture& _texture, const std::string& _path, const IRect& _rect = IRect());
 		void SetTexture(Shape* _shape, const Texture* _texture);
 		std::string GetExtensionNameByType(const TextureExtensionType& _textureType);

@@ -12,12 +12,23 @@ namespace engine
 		GIF
 	};
 
+	enum class ShapeType
+	{
+		Circle,
+		Rectangle
+	};
+
 	class ShapeObject
 	{
 		Texture texture;
 		std::unique_ptr<Shape> shape;
+		ShapeType shapeType;
 
 	public:
+		INLINE ShapeType GetShapeType()
+		{
+			return shapeType;
+		}
 		INLINE Texture& GetTextureRef()
 		{
 			return texture;

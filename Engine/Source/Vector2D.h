@@ -30,13 +30,13 @@ namespace engine
         }
 
         template<typename U, typename = std::enable_if_t<std::is_arithmetic_v<U>>>
-        explicit Vector2D(const sf::Vector2<U>& _vector) noexcept
+        Vector2D(const sf::Vector2<U>& _vector) noexcept
         {
             x = CAST(T, _vector.x);
             y = CAST(T, _vector.y);
         }
         template<typename U, typename = std::enable_if_t<std::is_arithmetic_v<U>>>
-        explicit Vector2D(const Vector2D<U>& _vector) noexcept
+        Vector2D(const Vector2D<U>& _vector) noexcept
         {
             x = CAST(T, _vector.x);
             y = CAST(T, _vector.y);

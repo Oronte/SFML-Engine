@@ -10,7 +10,8 @@
 #define USE_DEBUG 0
 #endif // DEBUG
 
-#define LOG(_verbosity, _msg)           engine::Logger::PrintLog(_verbosity, _msg, DEBUG_INFO)
+#define LOG(_verbosity, _msg)   engine::Logger::PrintLog(_verbosity, _msg, DEBUG_INFO)
+#define LOG_MSG(_msg)               engine::Logger::PrintLog(engine::VerbosityType::Display, _msg, DEBUG_INFO)
 
 namespace engine
 {

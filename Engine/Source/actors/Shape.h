@@ -27,9 +27,9 @@ namespace engine
         }
         INLINE void SetTexture(const Texture* _texture, const bool& _resetRect = false)
         {
-            if (!shape)
+            if (!shape || !_texture)
             {
-                LOG(VerbosityType::Error, "You try to use a non initialize shape (potential fake values)");
+                LOG(VerbosityType::Error, "You try to use a non initialize shape/texture (potential fake values)");
                 return;
             }
             shape->setTexture(_texture->Get(), _resetRect);

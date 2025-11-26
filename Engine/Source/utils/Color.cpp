@@ -19,10 +19,10 @@ constexpr engine::Color::Color(const std::uint8_t& _r, const std::uint8_t& _g, c
 
 constexpr engine::Color::Color(const std::uint32_t& _color) noexcept
 {
-    r = CAST(std::uint8_t, (_color >> 24) & 0xFF);
-    g = CAST(std::uint8_t, (_color >> 16) & 0xFF);
-    b = CAST(std::uint8_t, (_color >> 8) & 0xFF);
-    a = CAST(std::uint8_t, (_color) & 0xFF);
+    r = CAST(std::uint8_t, (_color >> 24) & 255);
+    g = CAST(std::uint8_t, (_color >> 16) & 255);
+    b = CAST(std::uint8_t, (_color >> 8) & 255);
+    a = CAST(std::uint8_t, (_color) & 255);
 }
 
 constexpr engine::Color::Color(const sf::Color& _color) noexcept

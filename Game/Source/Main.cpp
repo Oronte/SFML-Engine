@@ -1,5 +1,6 @@
 ﻿#include "Engine.h"
 #include "time/TimerManager.h"
+#include "actors/SpriteActor.h"
 
 void InitConfig()
 {
@@ -9,24 +10,26 @@ void InitConfig()
 	engine::Logger::Init();
 }
 
-void Test()
-{
-	LOG(engine::VerbosityType::Display, "Timer");
-}
-
 void StartGame()
 {
+	InitConfig();
+
 	std::unique_ptr<engine::Level> _level = std::make_unique<engine::Level>("first level");
 	engine::Engine _engine = engine::Engine(_level.get());
 
-	std::unique_ptr<engine::Actor> _actor = std::make_unique<engine::Actor>(_level.get());
-	_level->GetActorManager().AddActor(_actor.get());
+	engine::SpriteActor* _actor = _level->GetActorManager().CreateActor<engine::SpriteActor>(_level.get(), engine::FVector2(200.f), "Player", engine::TextureExtensionType::PNG, engine::IRect());
+	engine::SpriteActor* _defaultActor = _level->GetActorManager().CreateActor<engine::SpriteActor>(_level.get(), 50.f);
+	_actor->transform.position += engine::FVector2(200.f, 540.f);
+	_actor->transform.rotation = engine::Angle(50.f, true);
+	//_actor->transform.scale = engine::FVector2(0.5f, 0.5f);
+	_actor->GetComponent<engine::SpriteComponent>()->useDebug = true;
+	_defaultActor->GetComponent<engine::SpriteComponent>()->useDebug = true;
+	_defaultActor->transform.position = engine::FVector2(1600.f, 300.f);
+	_defaultActor->transform.scale = engine::FVector2(0.5f);
 
-	M_TIMER.CreateTimer( Test , 2.f, true, true);
-
-	_engine.onEngineStart.AddListener(InitConfig);
-	_engine.onEngineStop.AddListener(engine::Logger::Shutdown);
 	_engine.Start();
+
+	engine::Logger::Shutdown();
 }
 
 int main()

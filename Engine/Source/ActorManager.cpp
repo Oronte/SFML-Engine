@@ -2,12 +2,12 @@
 
 void engine::ActorManager::BeginPlay()
 {
-	for (Actor* _actor : actors) _actor->BeginPlay();
+	for (const std::unique_ptr<Actor>& _actor : actors) _actor->BeginPlay();
 }
 
 void engine::ActorManager::Update(const float& _deltaTime)
 {
-	for (Actor* _actor : actors)
+	for (const std::unique_ptr<Actor>& _actor : actors)
 	{
 		// TODO garbage collector
 		//if (_actor->IsToDelete())
@@ -22,7 +22,7 @@ void engine::ActorManager::Update(const float& _deltaTime)
 
 void engine::ActorManager::BeginDestroy()
 {
-	for (Actor* _actor : actors)
+	for (const std::unique_ptr<Actor>& _actor : actors)
 	{
 		_actor->BeginDestroy();
 	}

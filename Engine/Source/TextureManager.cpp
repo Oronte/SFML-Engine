@@ -4,24 +4,29 @@ using namespace engine;
 
 engine::TextureManager::TextureManager()
 {
-	std::filesystem::create_directories("../Content/Textures");
+	std::filesystem::create_directories(localPath);
 	LoadDefaultTexture();
 }
 
 void engine::TextureManager::LoadDefaultTexture()
 {
+	SetTextureToDefault(defaultTexture);
+}
+
+void engine::TextureManager::SetTextureToDefault(Texture& _texture)
+{
 	const std::string& _finalPath = defaultTexturePath + "." + defaultTextureExtension;
-	LoadTexture(defaultTexture, _finalPath);
+	LoadTexture(_texture, _finalPath);
 }
 
 void engine::TextureManager::LoadTexture(Texture& _texture, const std::string& _path, const IRect& _rect)
 {
 	const std::string& _finalPath = localPath + _path;
+
 	if (!_texture.LoadFromFile(_finalPath, false, _rect))
 	{
 		LOG(VerbosityType::Error, "Cannot open file with the following path : \'" + _finalPath + "\' !");
-		LoadDefaultTexture();
-		_texture = defaultTexture;
+		SetTextureToDefault(_texture);
 	}
 }
 
@@ -54,13 +59,15 @@ void engine::TextureManager::Load(ShapeObject* _shapeObject, const std::string& 
 	if (_path.empty())
 	{
 		LOG(VerbosityType::Error, "Cannot open file with an empty path !");
-		_texture = defaultTexture;
+		SetTextureToDefault(_texture);
 	}
-
-	const std::string& _texturePath = _path + "." + GetExtensionNameByType(_textureType);
-	LoadTexture(_texture, _texturePath, _rect);
-	_texture.SetRepeated(_isRepeated);
-	_texture.SetSmooth(_smooth);
+	else
+	{
+		const std::string& _texturePath = _path + "." + GetExtensionNameByType(_textureType);
+		LoadTexture(_texture, _texturePath, _rect);
+		_texture.SetRepeated(_isRepeated);
+		_texture.SetSmooth(_smooth);
+	}
 
 	SetTexture(_shapeObject->GetShape(), &_texture);
 }
