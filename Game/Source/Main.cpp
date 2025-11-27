@@ -26,7 +26,6 @@ void StartGame()
 	_defaultActor->GetComponent<engine::SpriteComponent>()->useDebug = true;
 	_defaultActor->transform.position = engine::FVector2(1600.f, 300.f);
 	_defaultActor->transform.scale = engine::FVector2(0.5f);
-
 	_engine.Start();
 
 	engine::Logger::Shutdown();

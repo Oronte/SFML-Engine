@@ -5,8 +5,6 @@ engine::SpriteActor::SpriteActor(Level* _level, const FVector2& _size, const std
 	: Actor(_level)
 {
 	sprite = CreateComponent<SpriteComponent>(_size, _path, _textureType, _rect, _isRepeated);
-	camera = CreateComponent<CameraComponent>();
-	GetLevel()->GetWindow().SetView(camera);
 }
 
 engine::SpriteActor::SpriteActor(Level* _level, const float& _radius, const std::string& _path, const TextureExtensionType& _textureType, const IRect& _rect, const size_t& _pointCount)

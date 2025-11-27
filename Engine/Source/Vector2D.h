@@ -11,6 +11,7 @@ namespace engine
         static_assert(std::is_arithmetic_v<T>, "Vector2<T> requires an arithmetic type T");
 
         using CalcType = std::common_type_t<T, float>;
+        using Math = Math<CalcType>;
 
         T x;
         T y;
@@ -52,7 +53,7 @@ namespace engine
             return Math::Sqrt(LengthSquared());
         }
 
-        NO_DISCARD Vector2D<CalcType> Normalized(CalcType _fallback = 0.0) const noexcept
+        NO_DISCARD Vector2D<CalcType> Normalized(const CalcType& _fallback = 0.0) const noexcept
         {
             CalcType _length = Length();
 
@@ -153,7 +154,7 @@ namespace engine
             return Math::RadToDeg(AngleBetweenRadians(_to));
         }
 
-        NO_DISCARD Vector2D<CalcType> Rotated(CalcType _angleRad) const noexcept
+        NO_DISCARD Vector2D<CalcType> Rotated(const CalcType& _angleRad) const noexcept
         {
             CalcType _cos = Math::Cos(_angleRad);
             CalcType _sin = Math::Sin(_angleRad);
@@ -165,7 +166,7 @@ namespace engine
                 _x * _sin + _y * _cos);
         }
 
-        NO_DISCARD Vector2D<CalcType> RotatedDeg(CalcType _angleDeg) const noexcept
+        NO_DISCARD Vector2D<CalcType> RotatedDeg(const CalcType& _angleDeg) const noexcept
         {
             return Rotated(Math::DegToRad(_angleDeg));
         }

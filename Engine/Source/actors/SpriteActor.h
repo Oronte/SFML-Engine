@@ -10,7 +10,6 @@ namespace engine
 	class SpriteActor : public Actor
 	{
 		SpriteComponent* sprite;
-		CameraComponent* camera;
 
 	public:
 		FORCEINLINE SpriteComponent* GetSprite() const

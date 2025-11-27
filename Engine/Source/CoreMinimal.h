@@ -4,3 +4,4 @@
 #include "Rectangle.h"
 #include "Angle.h"
 #include "utils/Utilities.h"
+#include "utils/Debug.h"
