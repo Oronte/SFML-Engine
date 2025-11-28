@@ -1,7 +1,7 @@
 #pragma once
-#include "actors/ShapeObject.h"
 #include "Component.h"
-#include "Debuggable.h"
+#include "Graphics/ShapeObject.h"
+#include "Utilities/System/Debuggable.h"
 
 namespace engine
 {

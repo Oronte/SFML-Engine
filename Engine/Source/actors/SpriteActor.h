@@ -1,8 +1,8 @@
 #pragma once
 #include "Actor.h"
-#include "components/SpriteComponent.h"
-#include "components/CameraComponent.h"
-#include "TextureManager.h"
+#include "Components/SpriteComponent.h"
+#include "Components/CameraComponent.h"
+#include "Managers/TextureManager.h"
 
 namespace engine
 {

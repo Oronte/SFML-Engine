@@ -1,6 +1,6 @@
 #include "Component.h"
-#include "actors/Actor.h"
-#include "Transform.h"
+#include "Actors/Actor.h"
+#include "Utilities/Math/Transform.h"
 
 using namespace engine;
 

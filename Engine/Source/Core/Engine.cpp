@@ -1,0 +1,32 @@
+#include "Engine.h"
+#include "Managers/TimerManager.h"
+
+using namespace engine;
+
+Engine::Engine(Level* _level)
+{
+	level = _level;
+}
+
+void Engine::Start()
+{
+	onEngineStart.Broadcast();
+	level->Load();
+	Update();
+	Stop();
+}
+
+void Engine::Update()
+{
+	while (level)
+	{
+		const float& _deltaTime = M_TIMER.Update();
+		level->Update(_deltaTime);
+	}
+}
+
+void Engine::Stop()
+{
+	onEngineStop.Broadcast();
+	delete level;
+}

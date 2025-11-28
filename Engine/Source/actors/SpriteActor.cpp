@@ -1,5 +1,5 @@
 #include "SpriteActor.h"
-#include "Level.h"
+#include "GameFramework/Level.h"
 
 engine::SpriteActor::SpriteActor(Level* _level, const FVector2& _size, const std::string& _path, const TextureExtensionType& _textureType, const IRect& _rect, const bool& _isRepeated)
 	: Actor(_level)

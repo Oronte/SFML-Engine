@@ -1,7 +1,7 @@
 #pragma once
-#include "Core.h"
+#include "Core/Core.h"
 #include "components/Component.h"
-#include "Transform.h"
+#include "Utilities/Math/Transform.h"
 
 namespace engine
 {

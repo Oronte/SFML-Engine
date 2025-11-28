@@ -1,6 +1,5 @@
 #include "Actor.h"
-#include "Transform.h"
-#include "Level.h"
+#include "GameFramework/Level.h"
 
 
 engine::Actor::Actor(Level* _level)

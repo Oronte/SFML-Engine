@@ -1,6 +1,6 @@
 #include "CameraComponent.h"
-#include "actors/Actor.h"
-#include "Level.h"
+#include "Actors/Actor.h"
+#include "GameFramework/Level.h"
 
 engine::CameraComponent::CameraComponent(Actor* _owner)
 	: Component(_owner)

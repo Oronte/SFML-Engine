@@ -1,6 +1,6 @@
-﻿#include "Engine.h"
-#include "time/TimerManager.h"
-#include "actors/SpriteActor.h"
+﻿#include "Core/Engine.h"
+#include "Actors/SpriteActor.h"
+#include "GameFramework/Level.h"
 
 void InitConfig()
 {
@@ -25,7 +25,7 @@ void StartGame()
 	_actor->GetComponent<engine::SpriteComponent>()->useDebug = true;
 	_defaultActor->GetComponent<engine::SpriteComponent>()->useDebug = true;
 	_defaultActor->transform.position = engine::FVector2(1600.f, 300.f);
-	_defaultActor->transform.scale = engine::FVector2(0.5f);
+	//_defaultActor->transform.scale = engine::FVector2(0.5f);
 	_engine.Start();
 
 	engine::Logger::Shutdown();

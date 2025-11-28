@@ -1,9 +1,9 @@
 #include "SpriteComponent.h"
-#include "Window.h"
-#include "actors/Actor.h"
-#include "Level.h"
-#include "CameraManager.h"
-#include "Vertices.h"
+#include "Graphics/Window/Window.h"
+#include "Actors/Actor.h"
+#include "GameFramework/Level.h"
+#include "Managers/CameraManager.h"
+#include "Graphics/Ressources/Vertices.h"
 
 engine::SpriteComponent::SpriteComponent(Actor* _owner, const float& _radius, const std::string& _path, const TextureExtensionType& _textureType, const IRect& _rect, const size_t& _pointCount)
 	: Component(_owner)
@@ -51,45 +51,18 @@ void engine::SpriteComponent::DrawDebug(Window& _window)
 {
 	if (!useDebug) return;
 
-	Vertices _vert = Vertices(PrimitiveType::LineStrip);
-	Shape* _shape = shape->GetShape();
-	const int& _pointCount = CAST(int, _shape->GetPointCount());
 	const FVector2& _position = owner->transform.position;
-	const FVector2& _origin = owner->transform.origin;
-	const float& _rotation = owner->transform.rotation.ToRadians();
 
 	switch (shape->GetShapeType())
 	{
 	case ShapeType::Circle:
-
-		//for (int _index = 0; _index < _pointCount; _index++)
-		//{
-		//	_vert.Append(_shape->GetPoint(_index) + _position - _origin, Color::Green());
-		//}
-		//_vert.Append(_shape->GetPoint(0) + _position - _origin, Color::Green());
-
-		Debug::DrawDebugCircle(_window, _position, 100.f);
-
+		Debug::DrawDebugCircle(_window, _position, shape->GetSizeData().radius, 15, Color::Green());
 		break;
 
 	case ShapeType::Rectangle:
-
-		if (_pointCount < 4) return;
-
-		Vertex _firstPoint;
-		_firstPoint.position = FVector2(_shape->GetPoint(0) + _position - _origin).RotateAround(_position, _rotation);
-		_firstPoint.color = Color::Green();
-
-		_vert.Append(_firstPoint);
-		_vert.Append(FVector2(_shape->GetPoint(1) + _position - _origin).RotateAround(_position, _rotation), Color::Green());
-		_vert.Append(FVector2(_shape->GetPoint(2) + _position - _origin).RotateAround(_position, _rotation), Color::Green());
-		_vert.Append(FVector2(_shape->GetPoint(3) + _position - _origin).RotateAround(_position, _rotation), Color::Green());
-		_vert.Append(_firstPoint);
-
+		Debug::DrawDebugRect(_window, _position, shape->GetSizeData().size, owner->transform.rotation, Color::Green());
 		break;
 	};
-
-	_window.Draw(_vert);
 }
 
 void engine::SpriteComponent::SetOriginAtMiddle()
