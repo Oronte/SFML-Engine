@@ -31,6 +31,11 @@ void engine::Window::Close()
 	window.close();
 }
 
+std::optional<sf::Event> engine::Window::PollEvent()
+{
+	return window.pollEvent();
+}
+
 void engine::Window::Draw(const sf::Drawable& _drawable)
 {
 	window.draw(_drawable);

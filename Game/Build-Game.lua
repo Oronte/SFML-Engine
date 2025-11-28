@@ -11,6 +11,7 @@ project "Game"
    {
       "Source",
       "../ThirdParty/SFML-3.0.0/include",
+      "../ThirdParty/imgui",
 	  "../Engine/Source"
    }
 

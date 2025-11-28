@@ -18,7 +18,7 @@
 #include <mutex>
 #include <format>
 #include <limits>
-#include <optional>
+//#include <optional>
 #include <type_traits>
 #include <utility>
 #include <cstddef>
@@ -32,12 +32,18 @@
 #include <map>
 #include <set>
 
-/// SFML
+// SFML
 #include "SFML/Graphics.hpp"
 #include "SFML/Window.hpp"
 #include "SFML/System.hpp"
 #include "SFML/Audio.hpp"
 #include "SFML/Network.hpp"
+
+// ImGui
+#include "imgui.h"
+#include "imgui-SFML.h"
+
+
 
 #define DEBUG_PATH
 #ifdef DEBUG_PATH

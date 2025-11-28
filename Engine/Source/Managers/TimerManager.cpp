@@ -1,4 +1,5 @@
 #include "TimerManager.h"
+#include "Graphics/Window/MainWindow.h"
 
 using namespace engine;
 
@@ -35,6 +36,7 @@ Timer* engine::TimerManager::CreateTimer(const std::function<void()>& _callback,
 float engine::TimerManager::Update()
 {
 	float _currentTime = GetTime(clock.getElapsedTime());
+    //ImGui::SFML::Update(MAIN_WINDOW.GetRenderWindow(), clock.restart());
 
     // First frame initialization
     if (lastTimeStamp < 0.0f)
