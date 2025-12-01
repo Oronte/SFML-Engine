@@ -6,7 +6,8 @@ using namespace engine;
 
 Engine::Engine(Level* _level)
 {
-	MAIN_WINDOW.Create("EngineSFML", UVector2(1920, 1080), true);
+	// TODO imgui + MainWindow
+	//MAIN_WINDOW.Create("EngineSFML", UVector2(1920, 1080), true);
 	//const bool& _imguiInit = ImGui::SFML::Init(MAIN_WINDOW.GetRenderWindow());
 	level = _level;
 }
