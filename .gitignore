@@ -400,8 +400,8 @@ FodyWeavers.xsd
 # JetBrains Rider
 *.sln.iml
 
-Binaries/
 Logs/
+Bin/
 
 *.sln
 *.vcxproj
