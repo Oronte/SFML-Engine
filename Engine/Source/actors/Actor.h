@@ -15,7 +15,6 @@ namespace engine
 	protected:
 		std::vector<std::unique_ptr<Component>> components;
 		Level* level;
-		int zOrder;
 
 	public:
 		Transform transform;
@@ -29,14 +28,6 @@ namespace engine
 			}
 
 			return Cast<Type>(level);
-		}
-		INLINE int GetZOrder()
-		{
-			return zOrder;
-		}
-		INLINE void SetZOrder(const int& _zOrder)
-		{
-			zOrder = _zOrder;
 		}
 		INLINE bool IsToDelete() const noexcept
 		{

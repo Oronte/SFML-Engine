@@ -9,7 +9,7 @@ namespace engine
 	class CameraManager
 	{
 		CameraComponent* current;
-		std::map<int, std::vector<SpriteComponent*>> drawer;
+		std::map<int, std::vector<IDrawable*>> drawer;
 
 	public:
 		FORCEINLINE void SetCurrent(CameraComponent* _camera)
@@ -17,18 +17,18 @@ namespace engine
 			if (!_camera) return;
 			current = _camera;
 		}
-		FORCEINLINE void AddToWindow(SpriteComponent* _sprite)
+		FORCEINLINE void AddToWindow(IDrawable* _drawable)
 		{
-			if (!_sprite)
+			if (!_drawable)
 			{
 				LOG(VerbosityType::Error, "You try to add to window an invalide sprite");
 				return;
 			}
-			drawer[_sprite->GetOwner()->GetZOrder()].push_back(_sprite);
+			drawer[_drawable->zOrder].push_back(_drawable);
 		}
-		FORCEINLINE void RemoveToWindow(SpriteComponent* _sprite)
+		FORCEINLINE void RemoveToWindow(IDrawable* _drawable)
 		{
-			if (!_sprite)
+			if (!_drawable)
 			{
 				LOG(VerbosityType::Error, "You try to remove to window an nullptr sprite");
 				return;

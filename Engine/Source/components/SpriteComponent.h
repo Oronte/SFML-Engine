@@ -2,13 +2,14 @@
 #include "Component.h"
 #include "Graphics/ShapeObject.h"
 #include "Utilities/System/Debuggable.h"
+#include "Utilities/System/Drawable.h"
 
 namespace engine
 {
 
 	class Window;
 
-	class SpriteComponent : public Component, public IDebuggable
+	class SpriteComponent : public Component, public IDebuggable, public IDrawable
 	{
 		std::unique_ptr<ShapeObject> shape;
 
@@ -27,7 +28,7 @@ namespace engine
 		virtual void Deconstruct() override;
 		virtual void Tick(const float& _deltaTime) override;
 
-		void Draw(Window& _window);
+		virtual void Draw(Window& _window) override;
 		virtual void DrawDebug(Window& _window) override;
 		void SetOriginAtMiddle();
 	};

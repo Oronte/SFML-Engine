@@ -1,5 +1,6 @@
 ﻿#include "Core/Engine.h"
 #include "Actors/SpriteActor.h"
+#include "Actors/SoftBodyActor.h"
 #include "GameFramework/Level.h"
 
 void InitConfig()
@@ -18,15 +19,29 @@ void StartGame()
 	
 	engine::Engine _engine = engine::Engine(_level.get());
 
-	engine::SpriteActor* _actor = _level->GetActorManager().CreateActor<engine::SpriteActor>(_level.get(), engine::FVector2(200.f), "Player", engine::TextureExtensionType::PNG, engine::IRect());
-	_actor->transform.position += engine::FVector2(200.f, 540.f);
-	_actor->transform.rotation = engine::Angle(50.f, true);
-	_actor->GetComponent<engine::SpriteComponent>()->useDebug = true;
-	
-	engine::SpriteActor* _defaultActor = _level->GetActorManager().CreateActor<engine::SpriteActor>(_level.get(), 50.f);
-	_defaultActor->GetComponent<engine::SpriteComponent>()->useDebug = true;
-	_defaultActor->transform.position = engine::FVector2(1600.f, 300.f);
-	
+	//engine::SpriteActor* _actor = _level->GetActorManager().CreateActor<engine::SpriteActor>(_level.get(), engine::FVector2(200.f), "Player", engine::TextureExtensionType::PNG, engine::IRect());
+	//_actor->transform.position += engine::FVector2(200.f, 540.f);
+	//_actor->transform.rotation = engine::Angle(50.f, true);
+	//_actor->GetComponent<engine::SpriteComponent>()->useDebug = true;
+	//
+	//engine::SpriteActor* _defaultActor = _level->GetActorManager().CreateActor<engine::SpriteActor>(_level.get(), 50.f);
+	//_defaultActor->GetComponent<engine::SpriteComponent>()->useDebug = true;
+	//_defaultActor->transform.position = engine::FVector2(1600.f, 300.f);
+	//
+
+
+	engine::SoftBodyActor* softActor = _level->GetActorManager().CreateActor<engine::SoftBodyActor>(
+		_level.get(), 80.f, 20 /*pointCount*/
+	);
+	softActor->transform.position = engine::FVector2(900.f, 400.f);
+	softActor->GetSoftBody()->PinParticle(0, true);
+
+	// exemple : actor soft body grille
+	engine::SoftBodyActor* softGrid = _level->GetActorManager().CreateActor<engine::SoftBodyActor>(
+		_level.get(), engine::FVector2(200.f, 120.f), 10 /*w*/, 6 /*h*/
+	);
+	softGrid->transform.position = engine::FVector2(600.f, 300.f);
+
 	_engine.Start();
 
 	engine::Logger::Shutdown();
