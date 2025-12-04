@@ -29,19 +29,23 @@ void StartGame()
 	//_defaultActor->transform.position = engine::FVector2(1600.f, 300.f);
 	
 
+	engine::SpriteActor* _actor = _level->GetActorManager().CreateActor<engine::SpriteActor>(_level.get(), engine::FVector2(125.f, 193.75f), "RyuGifSheet", engine::TextureExtensionType::PNG, engine::IRect());
+	_actor->transform.position += engine::FVector2(200.f, 540.f);
+	_actor->transform.rotation = engine::Angle(50.f, true);
+	_actor->GetComponent<engine::SpriteComponent>()->useDebug = true;
 
-	engine::SoftBodyActor* softActor = _level->GetActorManager().CreateActor<engine::SoftBodyActor>(
-		_level.get(), 80.f, 20 /*pointCount*/
-	);
-	softActor->transform.position = engine::FVector2(600.f, 600.f);
-	softActor->GetSoftBody()->PinParticle(0, true);
+	//engine::SoftBodyActor* softActor = _level->GetActorManager().CreateActor<engine::SoftBodyActor>(
+	//	_level.get(), 80.f, 20 /*pointCount*/
+	//);
+	//softActor->transform.position = engine::FVector2(600.f, 600.f);
+	//softActor->GetSoftBody()->PinParticle(0, true);
 
-	// exemple : actor soft body grille
-	engine::SoftBodyActor* softGrid = _level->GetActorManager().CreateActor<engine::SoftBodyActor>(
-		_level.get(), engine::FVector2(200.f, 120.f), 10 /*w*/, 6 /*h*/
-	);
-	softGrid->transform.position = engine::FVector2(600.f, 300.f);
-	softGrid->GetSoftBody()->PinParticle(0, true);
+	//// exemple : actor soft body grille
+	//engine::SoftBodyActor* softGrid = _level->GetActorManager().CreateActor<engine::SoftBodyActor>(
+	//	_level.get(), engine::FVector2(200.f, 120.f), 10 /*w*/, 6 /*h*/
+	//);
+	//softGrid->transform.position = engine::FVector2(600.f, 300.f);
+	//softGrid->GetSoftBody()->PinParticle(0, true);
 
 	_engine.Start();
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "Actor.h"
 #include "Components/SpriteComponent.h"
-#include "Components/CameraComponent.h"
+#include "AnimationComponent.h"
 #include "Managers/TextureManager.h"
 
 namespace engine
@@ -10,6 +10,7 @@ namespace engine
 	class SpriteActor : public Actor
 	{
 		SpriteComponent* sprite;
+		AnimationComponent* animation;
 
 	public:
 		FORCEINLINE SpriteComponent* GetSprite() const
