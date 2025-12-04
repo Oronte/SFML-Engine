@@ -6,7 +6,6 @@ using namespace engine;
 SoftBodyActor::SoftBodyActor(Level* _level, const FVector2& _size, int gridW, int gridH, float kstruct, float kshear)
 	: Actor(_level)
 {
-	// CreateComponent forwarde les arguments au constructeur du component (owner implicite)
 	softBody = CreateComponent<SoftBodyComponent>(gridW, gridH, _size, kstruct, kshear);
 }
 

@@ -24,12 +24,7 @@ void Engine::Update()
 {
 	while (level)
 	{
-		/*ImGui::SFML::ProcessEvent(MAIN_WINDOW.GetRenderWindow(), *MAIN_WINDOW.PollEvent());
-		ImGui::ShowDemoWindow();
-		ImGui::Begin("Hello");
-		ImGui::Text("Salut depuis ImGui + SFML 3");
-		ImGui::Button("Clique");
-		ImGui::End();*/
+		//ImGui::SFML::ProcessEvent(MAIN_WINDOW.GetRenderWindow(), *MAIN_WINDOW.PollEvent());
 		const float& _deltaTime = M_TIMER.Update();
 		level->Update(_deltaTime);
 		MAIN_WINDOW.RenderGui();

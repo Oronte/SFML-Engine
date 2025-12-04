@@ -13,7 +13,7 @@ namespace engine
 
 		struct Particle
 		{
-			FVector2 positionLocal; // local space relative to owner->transform.position
+			FVector2 positionLocal;
 			FVector2 velocity;
 			float mass = 1.0f;
 			bool pinned = false;
@@ -21,18 +21,16 @@ namespace engine
 
 		struct Spring
 		{
-			int a, b;           // index of particles; b == -1 means "center" (for ring radial springs)
+			int a, b;
 			float restLength;
 			float k;
 			float damping;
 		};
 
 	private:
-		// core data
 		std::vector<Particle> particles;
 		std::vector<Spring> springs;
 
-		// shape description (kept to allow re-build)
 		ShapeKind kind = ShapeKind::Ring;
 		// ring
 		int ringCount = 24;

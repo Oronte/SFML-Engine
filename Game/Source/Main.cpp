@@ -27,13 +27,13 @@ void StartGame()
 	//engine::SpriteActor* _defaultActor = _level->GetActorManager().CreateActor<engine::SpriteActor>(_level.get(), 50.f);
 	//_defaultActor->GetComponent<engine::SpriteComponent>()->useDebug = true;
 	//_defaultActor->transform.position = engine::FVector2(1600.f, 300.f);
-	//
+	
 
 
 	engine::SoftBodyActor* softActor = _level->GetActorManager().CreateActor<engine::SoftBodyActor>(
 		_level.get(), 80.f, 20 /*pointCount*/
 	);
-	softActor->transform.position = engine::FVector2(900.f, 400.f);
+	softActor->transform.position = engine::FVector2(600.f, 600.f);
 	softActor->GetSoftBody()->PinParticle(0, true);
 
 	// exemple : actor soft body grille
@@ -41,6 +41,7 @@ void StartGame()
 		_level.get(), engine::FVector2(200.f, 120.f), 10 /*w*/, 6 /*h*/
 	);
 	softGrid->transform.position = engine::FVector2(600.f, 300.f);
+	softGrid->GetSoftBody()->PinParticle(0, true);
 
 	_engine.Start();
 

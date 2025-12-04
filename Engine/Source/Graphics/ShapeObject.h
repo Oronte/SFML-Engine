@@ -23,7 +23,7 @@ namespace engine
 		float radius;
 		FVector2 size;
 
-		ShapeSizeData() {}
+		ShapeSizeData() : radius(0.0f) {}
 	};
 
 	class ShapeObject
