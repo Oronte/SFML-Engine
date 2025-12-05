@@ -10,18 +10,18 @@ project "Engine"
    includedirs
    {
       "Source",
-      "../ThirdParty/SFML-3.0.0/include",
-      "../ThirdParty/rapidjson",
-      "../ThirdParty/imgui"
+      RootDir .. "ThirdParty/SFML-3.0.0/include",
+      RootDir .. "ThirdParty/rapidjson",
+      RootDir .. "ThirdParty/imgui"
    }
 
    libdirs 
    {
-      "../ThirdParty/SFML-3.0.0/lib"
+      RootDir .. "ThirdParty/SFML-3.0.0/lib"
    }
 
-   targetdir ("Bin/" .. OutputDir .. "/%{prj.name}")
-   objdir ("Bin/Intermediates/" .. OutputDir .. "/%{prj.name}")
+   targetdir (RootDir .. "Bin/" .. OutputDir .. "/%{prj.name}")
+   objdir (RootDir .. "Bin/Intermediates/" .. OutputDir .. "/%{prj.name}")
 
    filter "system:windows"
        systemversion "latest"
