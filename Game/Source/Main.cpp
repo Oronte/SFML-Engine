@@ -52,77 +52,11 @@ void StartGame()
 	engine::Logger::Shutdown();
 }
 
-struct Player {
-	std::string name;
-	int level;
-	float health;
-};
-
 int main()
 {
-	Player player{ "Test", 3, 0.0f };
-
-	// ---- Sérialisation ----
-	rapidjson::Document doc;
-	doc.SetObject();
-	rapidjson::Document::AllocatorType& allocator = doc.GetAllocator();
-
-	doc.AddMember("name", rapidjson::Value().SetString(player.name.c_str(), allocator), allocator);
-	doc.AddMember("level", player.level, allocator);
-	doc.AddMember("health", player.health, allocator);
-
-	rapidjson::StringBuffer buffer;
-	rapidjson::Writer<rapidjson::StringBuffer> writer(buffer);
-	//rapidjson::PrettyWriter<rapidjson::StringBuffer> writer(buffer);
-	doc.Accept(writer);
-
-
-	// ---- Désérialisation ----
-	rapidjson::Document doc2;
-	if (doc2.Parse(buffer.GetString()).HasParseError()) {
-		std::cerr << "Erreur de parsing JSON!\n";
-		return 1;
-	}
-
-	Player loadedPlayer;
-	loadedPlayer.name = doc2["name"].GetString();
-	loadedPlayer.level = doc2["level"].GetInt();
-	loadedPlayer.health = doc2["health"].GetFloat();
-
-	std::ofstream outFile("../Content/Saves/player.json");
-	if (!outFile) {
-	}
-	else {
-		outFile << buffer.GetString(); // Écrit le JSON sérialisé dans le fichier
-		outFile.close();
-	}
-
-	std::ifstream inFile("../Content/Saves/player.json");
-	if (!inFile) {
-	}
-	else {
-		std::string jsonStr((std::istreambuf_iterator<char>(inFile)), std::istreambuf_iterator<char>());
-		inFile.close();
-
-		rapidjson::Document doc2;
-		if (doc2.Parse(jsonStr.c_str()).HasParseError()) {
-			return 1;
-		}
-
-		Player loadedPlayer;
-		loadedPlayer.name = doc2["name"].GetString();
-		loadedPlayer.level = doc2["level"].GetInt();
-		loadedPlayer.health = doc2["health"].GetFloat();
-
-		std::cout << "Player chargé depuis le fichier: "
-			<< loadedPlayer.name << ", "
-			<< loadedPlayer.level << ", "
-			<< loadedPlayer.health << std::endl;
-	}
-
 	try
 	{
-		//StartGame();
+		StartGame();
 	}
 	catch (const engine::Exception& _exception)
 	{

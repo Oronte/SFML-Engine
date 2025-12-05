@@ -9,7 +9,7 @@ namespace engine
 
 	class TextureManager : public Singleton<TextureManager>
 	{
-		std::string texturePath = "../Content/Textures/";
+		std::string texturePath = "Content/Textures/";
 		std::string defaultTexturePath = "Default";
 		std::string defaultTextureExtension = "png";
 		Texture defaultTexture;

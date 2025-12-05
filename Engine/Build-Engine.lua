@@ -20,8 +20,8 @@ project "Engine"
       "../ThirdParty/SFML-3.0.0/lib"
    }
 
-   targetdir ("../Bin/" .. OutputDir .. "/%{prj.name}")
-   objdir ("../Bin/Intermediates/" .. OutputDir .. "/%{prj.name}")
+   targetdir ("Bin/" .. OutputDir .. "/%{prj.name}")
+   objdir ("Bin/Intermediates/" .. OutputDir .. "/%{prj.name}")
 
    filter "system:windows"
        systemversion "latest"

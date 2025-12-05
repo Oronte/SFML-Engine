@@ -10,7 +10,7 @@ namespace engine
 
 	class FontManager : public Singleton<FontManager>
 	{
-		std::string fontPath = "../Content/Fonts/";
+		std::string fontPath = "Content/Fonts/";
 		std::string defaultFontPath = "DefaultFont";
 		std::string defaultFontExtension = "otf";
 		Font defaultFont;
