@@ -1,6 +1,6 @@
 #pragma once
-#include "Components/Component.h"
-#include "Animation.h"
+#include "Component.h"
+#include "Graphics/Ressources/Animation.h"
 
 
 namespace engine

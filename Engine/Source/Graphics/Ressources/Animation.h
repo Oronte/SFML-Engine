@@ -1,5 +1,5 @@
 #pragma once
-#include "Graphics/ShapeObject.h"
+#include "Graphics/Shapes/ShapeObject.h"
 #include "Utilities/System/Timer.h"
 
 namespace engine

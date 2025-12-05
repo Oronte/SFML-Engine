@@ -1,5 +1,5 @@
 #include "Window.h"
-#include "Graphics/ShapeObject.h"
+#include "Graphics/Shapes/ShapeObject.h"
 #include "Components/CameraComponent.h"
 #include "Graphics/Ressources/Vertices.h"
 

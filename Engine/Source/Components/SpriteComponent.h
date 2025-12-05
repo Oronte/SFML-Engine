@@ -1,8 +1,9 @@
 #pragma once
 #include "Component.h"
-#include "Graphics/ShapeObject.h"
+#include "Graphics/Shapes/ShapeObject.h"
 #include "Utilities/System/Debuggable.h"
 #include "Utilities/System/Drawable.h"
+#include "Graphics/Ressources/Text.h"
 
 namespace engine
 {

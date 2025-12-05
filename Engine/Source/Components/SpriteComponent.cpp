@@ -3,7 +3,6 @@
 #include "Actors/Actor.h"
 #include "GameFramework/Level.h"
 #include "Managers/CameraManager.h"
-#include "Graphics/Ressources/Vertices.h"
 
 engine::SpriteComponent::SpriteComponent(Actor* _owner, const float& _radius, const std::string& _path, const TextureExtensionType& _textureType, const IRect& _rect, const size_t& _pointCount)
 	: Component(_owner)

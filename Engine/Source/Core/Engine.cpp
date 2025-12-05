@@ -24,10 +24,17 @@ void Engine::Update()
 {
 	while (level)
 	{
+		const std::optional _event = level->GetWindow().PollEvent();
 		//ImGui::SFML::ProcessEvent(MAIN_WINDOW.GetRenderWindow(), *MAIN_WINDOW.PollEvent());
 		const float& _deltaTime = M_TIMER.Update();
 		level->Update(_deltaTime);
-		MAIN_WINDOW.RenderGui();
+		//MAIN_WINDOW.RenderGui();
+
+		if (_event.has_value() && _event->is<sf::Event::Closed>())
+		{
+			level->GetWindow().Close();
+			level = nullptr;
+		}
 	}
 }
 

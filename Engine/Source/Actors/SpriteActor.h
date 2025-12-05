@@ -1,7 +1,7 @@
 #pragma once
 #include "Actor.h"
 #include "Components/SpriteComponent.h"
-#include "AnimationComponent.h"
+#include "Components/AnimationComponent.h"
 #include "Managers/TextureManager.h"
 
 namespace engine

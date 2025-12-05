@@ -1,6 +1,6 @@
 #pragma once
 #include "Utilities/Singleton.h"
-#include "Graphics/ShapeObject.h"
+#include "Graphics/Shapes/ShapeObject.h"
 
 #define M_TEXTURE engine::TextureManager::GetInstance()
 
@@ -9,7 +9,7 @@ namespace engine
 
 	class TextureManager : public Singleton<TextureManager>
 	{
-		std::string localPath = "../Content/Textures/StarterContent/";
+		std::string texturePath = "../Content/Textures/";
 		std::string defaultTexturePath = "Default";
 		std::string defaultTextureExtension = "png";
 		Texture defaultTexture;

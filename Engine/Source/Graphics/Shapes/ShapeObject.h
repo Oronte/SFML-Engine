@@ -1,16 +1,8 @@
 #pragma once
-#include "Graphics/Ressources/Texture.h"
 #include "Shape.h"
 
 namespace engine
 {
-
-	enum class TextureExtensionType
-	{
-		PNG,
-		JPG,
-		GIF
-	};
 
 	enum class ShapeType
 	{

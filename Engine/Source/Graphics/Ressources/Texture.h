@@ -5,6 +5,13 @@
 namespace engine
 {
 
+    enum class TextureExtensionType
+    {
+        PNG,
+        JPG,
+        GIF
+    };
+
 	class Texture
 	{
 		std::unique_ptr<sf::Texture> texture;

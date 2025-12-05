@@ -1,5 +1,5 @@
 #include "AnimationComponent.h"
-#include "Components/SpriteComponent.h"
+#include "SpriteComponent.h"
 #include "Actors/Actor.h"
 
 engine::AnimationComponent::AnimationComponent(Actor* _owner)

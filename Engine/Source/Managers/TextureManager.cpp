@@ -4,7 +4,7 @@ using namespace engine;
 
 engine::TextureManager::TextureManager()
 {
-	std::filesystem::create_directories(localPath);
+	std::filesystem::create_directories(texturePath);
 	LoadDefaultTexture();
 }
 
@@ -21,7 +21,7 @@ void engine::TextureManager::SetTextureToDefault(Texture& _texture)
 
 void engine::TextureManager::LoadTexture(Texture& _texture, const std::string& _path, const IRect& _rect)
 {
-	const std::string& _finalPath = localPath + _path;
+	const std::string& _finalPath = texturePath + _path;
 
 	if (!_texture.LoadFromFile(_finalPath, false, _rect))
 	{
