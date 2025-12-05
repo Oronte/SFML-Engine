@@ -11,6 +11,7 @@ project "Engine"
    {
       "Source",
       "../ThirdParty/SFML-3.0.0/include",
+      "../ThirdParty/rapidjson",
       "../ThirdParty/imgui"
    }
 

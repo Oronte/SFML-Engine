@@ -39,9 +39,14 @@
 #include "SFML/Network.hpp"
 
 // ImGui
-#include "imgui.h"
-#include "imgui-SFML.h"
+#include "ImGui/imgui.h"
+#include "ImGui/imgui-SFML.h"
 
+// RapidJson
+#include "RapidJson/document.h"
+#include "RapidJson/writer.h"
+#include "RapidJson/stringbuffer.h"
+#include "RapidJson/prettywriter.h"
 
 
 #define DEBUG_PATH
@@ -52,7 +57,7 @@
 #endif // DEBUG_FILE
 
 #ifdef _MSC_VER
-	#define new							new(_NORMAL_BLOCK, __FILE__, __LINE__)// Memory leaks
+	//#define new							new(_NORMAL_BLOCK, __FILE__, __LINE__)// Memory leaks
 #endif
 
 //#define Super							__super // IDEA Find alternative
